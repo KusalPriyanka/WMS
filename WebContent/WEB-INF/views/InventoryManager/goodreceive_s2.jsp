@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,9 +63,9 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Good Receiving(GRN)</h6>
+            <a class="collapse-item" href="goodreceive.html">Overview</a>
             <a class="collapse-item" href="goodreceive.html">Create GRN</a>
-            <a class="collapse-item" href="cards.html">Update GRN</a>
-            <a class="collapse-item" href="cards.html">Show GRN List</a>
+            <a class="collapse-item" href="itemrequest.html">Request New Item</a>
           </div>
         </div>
       </li>
@@ -96,8 +95,8 @@
         <div id="dis" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Good Dispatching(GDN)</h6>
+            <a class="collapse-item" href="goodreceive.html">Overview</a>
             <a class="collapse-item" href="goodreceive.html">Create GDN</a>
-            <a class="collapse-item" href="cards.html">Show GDN List</a>
           </div>
         </div>
       </li>
@@ -391,7 +390,7 @@
                             <input type="text" class="form-control form-control-sm" id="remark" placeholder="Remark">
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-icon-split">
+                        <button type="submit" class="btn btn-primary btn-icon-split mt-3 mb-3">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-arrow-right"></i>
                                 </span>
