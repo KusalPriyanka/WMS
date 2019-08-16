@@ -1,1 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<Querys>
+
+	<!-- Create table GRN Query -->
+	<query id="create_employee_table">
+        <![CDATA[
+            CREATE TABLE employee(
+				employeeID varchar(10) not null,
+				employeeName varchar(20),
+			)
+        ]]>
+	</query>
+	
+	
+</Querys>
