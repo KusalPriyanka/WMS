@@ -7,8 +7,15 @@
         <![CDATA[
             CREATE TABLE employee(
 				employeeID varchar(10) not null,
-				employeeName varchar(20),
+				employeeName varchar(20)
 			)
+        ]]>
+	</query>
+	
+	<!-- DROP TABLE EMPLOYEES Query -->
+	<query id="drop_table">
+         <![CDATA[        
+            DROP TABLE IF EXISTS employee
         ]]>
 	</query>
 	
