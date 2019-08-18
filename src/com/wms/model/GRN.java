@@ -10,11 +10,12 @@ public class GRN {
 	private String sTime;
 	private String eTime;
 	private String cusId;
+	private int noOfItems;
 	
 	public GRN() {}
 
 	public GRN(String gRNNo, String vehicleNo, String containerNo, String trailerNo, String date, String sTime,
-			String eTime, String cusId) {
+			String eTime, String cusId , int noOfItems) {
 		super();
 		GRNNo = gRNNo;
 		this.vehicleNo = vehicleNo;
@@ -24,6 +25,7 @@ public class GRN {
 		this.sTime = sTime;
 		this.eTime = eTime;
 		this.cusId = cusId;
+		this.noOfItems = noOfItems;
 	}
 
 	public String getGRNNo() {
@@ -88,6 +90,14 @@ public class GRN {
 
 	public void setCusId(String cusId) {
 		this.cusId = cusId;
+	}
+
+	public int getNoOfItems() {
+		return noOfItems;
+	}
+
+	public void setNoOfItems(int noOfItems) {
+		this.noOfItems = noOfItems;
 	}
 
 	@Override

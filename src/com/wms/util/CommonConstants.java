@@ -32,12 +32,16 @@ public class CommonConstants {
 	/** Constant for driver name key of MySQL database in config.properties */
 	public static final String DRIVER_NAME = "driverName";
 
-	/** Constant for query id of drop_table in EmployeeQuery.xml */
+	/** Constant for query id of drop_table in Query.xml */
 	public static final String QUERY_ID_DROP_TABLE = "drop_table";
 
-	/** Constant for query id of create_table in EmployeeQuery.xml */
-	public static final String QUERY_ID_CREATE_TABLE = "create_employee_table";
+	/** Constant for query id of create_table in Query.xml */
+	public static final String QUERY_ID_CREATE_CUSTOMER_TABLE = "create_customer_table";
+	public static final String QUERY_ID_CREATE_GRN_TABLE = "create_GRN_table";
+	public static final String QUERY_ID_CREATE_GRN_QTY_TABLE = "create_GRN_Qty_table";
 	
+	/** Constant for query id of insert GRN in Query.xml */
+	public static final String QUERY_ID_INSERT_GRN = "insert_GRN";
 
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

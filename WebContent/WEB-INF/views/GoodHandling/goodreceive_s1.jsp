@@ -325,24 +325,24 @@
             
           <div class="row m-2 justify-content-center m-4">
               <div class="col-md-10">
-                <form action="#" method="POST">
+                <form action="InsertGRN" method="POST">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Select Customer :</label>
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option>Mr. Kusal Priyanka</option>
-                          <option>Miss Ruwani Sanjula</option>
-                          <option>Mr. Gimith M.R.</option>
+                        <select class="form-control" id="exampleFormControlSelect1" name="cusId">
+                          <option value="01">Mr. Kusal Priyanka</option>
+                          <option value="02">Miss Ruwani Sanjula</option>
+                          <option value="03">Mr. Gimith M.R.</option>
                         </select>
                     </div>
                     <div class="form-group">
                       <div class="form-row">
                           <div class="col">
                             <label for="GRNNumber">GRN No :</label>
-                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="GRN No">
+                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="GRN No" name="GRNNo">
                           </div>
                           <div class="col">
                               <label for="Date">Select Date :</label>
-                              <input type="date" class="form-control form-control-sm" id="Date">
+                              <input type="date" class="form-control form-control-sm" id="Date" name="Date">
                           </div>
                       </div>
                     </div>
@@ -350,11 +350,11 @@
                       <div class="form-row">
                           <div class="col">
                             <label for="vehicleNo">Enter Vehicle Number :</label>
-                            <input type="text" class="form-control form-control-sm" id="vehicleNo" placeholder="Vehicle Number">
+                            <input type="text" class="form-control form-control-sm" id="vehicleNo" placeholder="Vehicle Number" name="VehicleNum">
                           </div>
                           <div class="col">
                               <label for="containerNo">Enter Container Number :</label>
-                              <input type="text" class="form-control form-control-sm" id="containerNo" placeholder="Container Number">
+                              <input type="text" class="form-control form-control-sm" id="containerNo" placeholder="Container Number" name="ContainerNo">
                           </div>
                       </div>
                     </div>
@@ -362,7 +362,7 @@
                         <div class="form-row">
                             <div class="col-md-6">
                                 <label for="trailerNo">Enter Trailer Number :</label>
-                                <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Enter Trailer Number">
+                                <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Enter Trailer Number" name="TrailerNo">
                             </div>
                         </div>
                     </div>
@@ -370,11 +370,11 @@
                         <div class="form-row">
                             <div class="col">
                               <label for="STime">Enter Start Time :</label>
-                              <input type="time" class="form-control form-control-sm" id="STime" placeholder="Start Time">
+                              <input type="time" class="form-control form-control-sm" id="STime" placeholder="Start Time" name="STime">
                             </div>
                             <div class="col">
                                 <label for="ETime">Enter End Time :</label>
-                                <input type="time" class="form-control form-control-sm" id="ETime" placeholder="End Time">
+                                <input type="time" class="form-control form-control-sm" id="ETime" placeholder="End Time" name="ETime">
                             </div>
                         </div>
                     </div>
@@ -382,7 +382,7 @@
                         <div class="form-row">
                             <div class="col-md-6">
                               <label for="NoOfProducts">Enter No Of Products :</label>
-                              <input type="number" class="form-control form-control-sm" id="NoOfProducts" placeholder="No Of Products">
+                              <input type="number" class="form-control form-control-sm" id="NoOfProducts" placeholder="No Of Products" name="NoOfProducts">
                             </div>
                         </div>
                     </div>

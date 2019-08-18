@@ -1,6 +1,8 @@
 package com.wms.service;
 
+import com.wms.model.GRN;
+
 public interface IGoodHandlingService {
 
-	public void add();
+	public void addGRN(GRN grn);
 }

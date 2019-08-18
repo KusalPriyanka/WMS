@@ -2,22 +2,84 @@
 
 <Querys>
 
-	<!-- Create table GRN Query -->
-	<query id="create_employee_table">
+	<!-- Create table Customer Query -->
+	<query id="create_customer_table">
         <![CDATA[
-            CREATE TABLE employee(
-				employeeID varchar(10) not null,
-				employeeName varchar(20)
-			)
+			CREATE TABLE `testdww`.`customer` (
+			  `CustomerId` VARCHAR(10) NOT NULL,
+			  `CusName` VARCHAR(75) NOT NULL,
+			  `Address` VARCHAR(100) NOT NULL,
+			  `Email` VARCHAR(45) NOT NULL,
+			  `MobileNo` VARCHAR(10) NOT NULL,
+			  `PayMethod` TINYINT NOT NULL,
+			  `CusRef` VARCHAR(20) NOT NULL,
+			  PRIMARY KEY (`CustomerId`),
+			  UNIQUE INDEX `CustomerId_UNIQUE` (`CustomerId` ASC) VISIBLE);
         ]]>
 	</query>
 	
-	<!-- DROP TABLE EMPLOYEES Query -->
+	<!-- Create table GRN Query -->
+	<query id="create_GRN_table">
+        <![CDATA[
+			CREATE TABLE `testdww`.`grn` (
+			  `GRNNo` VARCHAR(20) NOT NULL,
+			  `VehicleNo` VARCHAR(20) NOT NULL,
+			  `ContainerNo` VARCHAR(20) NOT NULL,
+			  `TrailerNo` VARCHAR(20) NOT NULL,
+			  `Date` DATE NOT NULL,
+			  `STime` VARCHAR(20) NOT NULL,
+			  `ETime` VARCHAR(20) NOT NULL,
+			  `CusId` VARCHAR(10) NOT NULL,
+			  PRIMARY KEY (`GRNNo`),
+			  UNIQUE INDEX `GRNNo_UNIQUE` (`GRNNo` ASC) VISIBLE,
+			  INDEX `Cus_Ref_idx` (`CusId` ASC) VISIBLE,
+			  CONSTRAINT `Cus_Ref`
+			    FOREIGN KEY (`CusId`)
+			    REFERENCES `testdww`.`customer` (`CustomerId`)
+			    ON DELETE NO ACTION
+			    ON UPDATE NO ACTION);
+        ]]>
+	</query>
+	
+	<!-- Create table GRN_QTY Query -->
+	<query id="create_GRN_Qty_table">
+        <![CDATA[
+			CREATE TABLE `testdww`.`grn_qty` (
+			  `id` INT NOT NULL AUTO_INCREMENT,
+			  `GRNNo` VARCHAR(20) NOT NULL,
+			  `ItemDes` VARCHAR(100) NOT NULL,
+			  `Qty` FLOAT NOT NULL,
+			  `UOM` VARCHAR(45) NOT NULL,
+			  `SeqFeet` INT NOT NULL,
+			  `CBM` INT NOT NULL,
+			  `WLocId` VARCHAR(5) NOT NULL,
+			  `DamageQty` FLOAT NOT NULL,
+			  `Status` VARCHAR(45) NOT NULL,
+			  `Remark` VARCHAR(100) NOT NULL,
+			  PRIMARY KEY (`id`),
+			  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+			  INDEX `GRN_Ref_idx` (`GRNNo` ASC) VISIBLE,
+			  CONSTRAINT `GRN_Ref`
+			    FOREIGN KEY (`GRNNo`)
+			    REFERENCES `testdww`.`grn` (`GRNNo`)
+			    ON DELETE NO ACTION
+			    ON UPDATE NO ACTION);
+        ]]>
+	</query>
+	
+	
+	<!-- DROP TABLES -->
 	<query id="drop_table">
          <![CDATA[        
-            DROP TABLE IF EXISTS employee
+            DROP TABLE IF EXISTS customer
         ]]>
 	</query>
 	
+	<!-- INSERT GRN QUERY -->
+	<query id="insert_GRN">
+        <![CDATA[
+          	insert into grn values (?, ?, ?, ?, ?, ?, ?, ?)
+        ]]>
+	</query>
 	
 </Querys>
