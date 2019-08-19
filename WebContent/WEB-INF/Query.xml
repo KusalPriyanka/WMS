@@ -71,7 +71,9 @@
 	<!-- DROP TABLES -->
 	<query id="drop_table">
          <![CDATA[        
-            DROP TABLE IF EXISTS customer
+            DROP TABLE IF EXISTS customer;
+            DROP TABLE IF EXISTS grn;
+            DROP TABLE IF EXISTS grn_qty;
         ]]>
 	</query>
 	
