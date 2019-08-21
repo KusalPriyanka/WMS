@@ -11,6 +11,7 @@ import com.wms.model.GRN;
 import com.wms.service.GoodHandlingServiceImpl;
 import com.wms.service.IGoodHandlingService;
 
+//Servlet For Insert GRN
 
 @WebServlet("/InsertGRN")
 public class InsertGRN extends HttpServlet {
