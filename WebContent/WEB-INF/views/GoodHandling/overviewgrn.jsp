@@ -364,7 +364,9 @@
                         <td>Bags</td>
                         <td>60</td>
                         <td>2019/04/25</td>
-                        <td><center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Update</button></center></td>
+                        <td><center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                        </center></td>
                     </tr>
                     <tr>
                         <td>Lakmal Perera</td>
@@ -372,7 +374,9 @@
                         <td>Plates</td>
                         <td>35</td>
                         <td>2019/02/15</td>
-                        <td><center><button type="button" class="btn btn-success">Update</button></center></td>
+                        <td><center><button type="button" class="btn btn-success">Update</button>
+                        <button type="button" class="btn btn-danger">Delete</button>
+                        </center></td>
                       </tr>
                 </tbody>
             </table>
