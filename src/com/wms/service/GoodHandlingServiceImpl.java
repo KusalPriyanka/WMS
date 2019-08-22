@@ -3,8 +3,10 @@ package com.wms.service;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,4 +100,70 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 	}
 
+	@Override
+	public GRN getGRNById(String GRNNo) {
+
+		return actionGRN(GRNNo).get(0);
+	}
+
+	
+	private ArrayList<GRN> actionGRN(String GRNNo){
+		
+		ArrayList<GRN> grnlist = new ArrayList<GRN>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			if (GRNNo != null && !GRNNo.isEmpty()) {
+				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GRN));
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GRNNo);
+				
+			}
+			
+			else {
+				
+				
+				
+			}
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				GRN grn = new GRN();
+				grn.setGRNNo(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+				grn.setVehicleNo(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				grn.setContainerNo(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+				grn.setTrailerNo(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+				grn.setDate(resultSet.getString(CommonConstants.COLUMN_INDEX_FIVE));
+				grn.setsTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
+				grn.seteTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+				grn.setCusId(resultSet.getString(CommonConstants.COLUMN_INDEX_EIGHT));
+				grnlist.add(grn);
+				
+			}
+			
+		} catch (Exception e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return grnlist;
+		
+	}
 }
