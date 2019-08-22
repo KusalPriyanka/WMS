@@ -84,4 +84,18 @@
         ]]>
 	</query>
 	
+	<!-- Select a particular GRN by id Query -->
+	<query id="GRN_by_id">
+         <![CDATA[        
+            select * from grn where GRNNo = ?
+        ]]>
+	</query>
+
+	<!-- Select all GRN -->
+	<query id="all_GRN">
+         <![CDATA[        
+            select * from grn
+        ]]>
+	</query>
+	
 </Querys>
