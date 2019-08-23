@@ -27,7 +27,6 @@ public class UpdateGRN extends HttpServlet {
 		IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
 		GRN grn = goodHandlingService.getGRNById("GRN01");
 		
-		System.out.println(grn);
 	}
 
 }

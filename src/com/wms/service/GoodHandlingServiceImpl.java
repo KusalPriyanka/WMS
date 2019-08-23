@@ -105,7 +105,12 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 		return actionGRN(GRNNo).get(0);
 	}
-
+	
+	@Override
+	public ArrayList<GRN> getGRNs() {
+		
+		return actionGRN(null);
+	}
 	
 	private ArrayList<GRN> actionGRN(String GRNNo){
 		
@@ -124,7 +129,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			
 			else {
 				
-				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_ALL_GRN));
 				
 			}
 			
@@ -166,4 +171,5 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		return grnlist;
 		
 	}
+
 }
