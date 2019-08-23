@@ -92,7 +92,7 @@
 	</query>
 
 	<!-- Select all GRN -->
-	<query id="all_GRN">
+	<query id="all_GRNS">
          <![CDATA[        
             select * from grn
         ]]>
