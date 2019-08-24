@@ -1,6 +1,8 @@
 package com.wms.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +28,8 @@ public class InsertGRN extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
+		response.setContentType("text/html");
+		/*
 		GRN GRN = new GRN();
 		GRN.setGRNNo(request.getParameter("GRNNo"));
 		GRN.setDate(request.getParameter("Date"));
@@ -38,7 +42,11 @@ public class InsertGRN extends HttpServlet {
 		GRN.setNoOfItems(Integer.parseInt(request.getParameter("NoOfProducts")));
 		
 		IGoodHandlingService iGoodHandlingService = new GoodHandlingServiceImpl();
-		iGoodHandlingService.addGRN(GRN);
+		iGoodHandlingService.addGRN(GRN); */
+		
+		request.setAttribute("GRNNo", request.getParameter("GRNNo"));
+		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/views/GoodHandling/goodreceive_s2.jsp");
+		dispatcher.forward(request, response);		
 		
 	}
 

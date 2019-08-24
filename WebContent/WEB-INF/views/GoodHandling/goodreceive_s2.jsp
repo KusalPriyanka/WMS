@@ -517,3 +517,7 @@
 </body>
 
 </html>
+
+<%
+	System.out.println(request.getAttribute("GRNNo"));
+%>
