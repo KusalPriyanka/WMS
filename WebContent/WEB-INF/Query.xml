@@ -84,6 +84,13 @@
         ]]>
 	</query>
 	
+	<!-- INSERT GRN_QTY QUERY -->
+	<query id="insert_GRN_QTY">
+        <![CDATA[
+          	insert into grn_qty values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ]]>
+	</query>
+	
 	<!-- Select a particular GRN by id Query -->
 	<query id="GRN_by_id">
          <![CDATA[        
