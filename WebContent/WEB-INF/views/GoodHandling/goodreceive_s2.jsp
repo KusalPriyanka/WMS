@@ -329,31 +329,31 @@
 
             <div class="row m-2">
                 <div class="col-md-8">
-                    <form action="#" method="POST">
-
+                    <form action="InsertGRN?step=2" method="POST">
+						<input type="hidden" value="<%= request.getParameter("GRNNo") %>" name="GRNNo"/>
                         <div class="form-group">
                                 <label for="item">Select Item :</label>
-                                <select class="form-control form-control-sm" id="item">
-                                    <option>Item X</option>
-                                    <option>Item Y</option>
-                                    <option>Item Z</option>
+                                <select class="form-control form-control-sm" id="item" name="itemId">
+                                    <option value="1">Item X</option>
+                                    <option value="2">Item Y</option>
+                                    <option value="3">Item Z</option>
                                 </select>                            
                         </div>
 
                         <div class="form-group">
                             <label for="batchno">Enter Batch No :</label>
-                            <input type="text" class="form-control form-control-sm" id="batchno" placeholder="Batch No">
+                            <input type="text" class="form-control form-control-sm" id="batchno" placeholder="Batch No" name="batchNo">
                         </div>
 
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
                                     <label for="quantity">Enter Quantity :</label>
-                                    <input type="text" class="form-control form-control-sm" id="quantity" placeholder="Quantity">
+                                    <input type="text" class="form-control form-control-sm" id="quantity" placeholder="Quantity" name="qty">
                                 </div>
                                 <div class="col">
                                     <label for="uom">Enter UOM :</label>
-                                    <input type="text" class="form-control form-control-sm" id="uom" placeholder="UOM">                                    
+                                    <input type="text" class="form-control form-control-sm" id="uom" placeholder="UOM" name="uom">                                    
                                 </div>
                         </div>
 
@@ -363,11 +363,11 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="squfeet">Enter Square Feet :</label>
-                                    <input type="text" class="form-control form-control-sm" id="squfeet" placeholder="Square Feet">
+                                    <input type="text" class="form-control form-control-sm" id="squfeet" placeholder="Square Feet" name="sf">
                                 </div>
                                 <div class="col">
                                     <label for="cbm">Enter CBM :</label>
-                                    <input type="text" class="form-control form-control-sm" id="cbm" placeholder="CBM">
+                                    <input type="text" class="form-control form-control-sm" id="cbm" placeholder="CBM" name="cbm">
                                 </div>
                             </div>
                         </div>
@@ -375,22 +375,30 @@
                         <div class="form-group">
                                 <div class="form-row">
                                     <div class="col">
-                                        <label for="status">Enter Status :</label>
-                                        <input type="text" class="form-control form-control-sm" id="status" placeholder="Status">
+                                        <label for="wLoc">Enter Warehouse Location :</label>
+                                        <input type="text" class="form-control form-control-sm" id="wLoc" placeholder="Warehouse Location" name="wLoc">
                                     </div>
                                     <div class="col">
                                         <label for="dQuantity">Enter Damage Quantity :</label>
-                                        <input type="text" class="form-control form-control-sm" id="dQuantity" placeholder="Damage Quantity">
+                                        <input type="text" class="form-control form-control-sm" id="dQuantity" placeholder="Damage Quantity" name="dQty">
                                     </div>
                                 </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="remark">Enter Remark :</label>
-                            <input type="text" class="form-control form-control-sm" id="remark" placeholder="Remark">
+                            <div class="form-row">
+                        	<div class="col">
+                               <label for="status">Enter Status :</label>
+                               <input type="text" class="form-control form-control-sm" id="status" placeholder="Status" name="status">
+                        	</div>
+                        	<div class="col">
+                        	   	<label for="remark">Enter Remark :</label>
+                            	<input type="text" class="form-control form-control-sm" id="remark" placeholder="Remark" name="remark">
+                        	</div>
+							</div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-icon-split mt-3 mb-3">
+                        <button type="submit" class="btn btn-primary btn-icon-split mt-2 mb-3">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-arrow-right"></i>
                                 </span>
@@ -517,7 +525,3 @@
 </body>
 
 </html>
-
-<%
-	System.out.println(request.getAttribute("GRNNo"));
-%>

@@ -325,7 +325,7 @@
             
           <div class="row m-2 justify-content-center m-4">
               <div class="col-md-10">
-                <form action="InsertGRN" method="POST">
+                <form action="InsertGRN?step=1" method="POST">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Select Customer :</label>
                         <select class="form-control" id="exampleFormControlSelect1" name="cusId">
