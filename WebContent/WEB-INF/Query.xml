@@ -47,7 +47,7 @@
 			CREATE TABLE `testdww`.`grn_qty` (
 			  `id` INT NOT NULL AUTO_INCREMENT,
 			  `GRNNo` VARCHAR(20) NOT NULL,
-			  `ItemDes` VARCHAR(100) NOT NULL,
+			  `ItemId` INT NOT NULL,
 			  `Qty` FLOAT NOT NULL,
 			  `UOM` VARCHAR(45) NOT NULL,
 			  `SeqFeet` INT NOT NULL,
@@ -67,13 +67,22 @@
         ]]>
 	</query>
 	
+	<!-- DROP TABLES -->
+	<query id="drop_table_function">
+         <![CDATA[        
+			    CREATE PROCEDURE dropTable()
+			    BEGIN
+			        DROP TABLE IF EXISTS customer;
+			        DROP TABLE IF EXISTS grn;
+			        DROP TABLE IF EXISTS grn_qty;
+			    END
+        ]]>
+	</query>
 	
 	<!-- DROP TABLES -->
 	<query id="drop_table">
          <![CDATA[        
-            DROP TABLE IF EXISTS customer;
-            DROP TABLE IF EXISTS grn;
-            DROP TABLE IF EXISTS grn_qty;
+			CALL dropTable
         ]]>
 	</query>
 	
@@ -101,7 +110,7 @@
 	<!-- Select all GRN -->
 	<query id="all_GRNS">
          <![CDATA[        
-            select * from grn
+            select g.GRNNo,CusName,VehicleNo,SeqFeet,Date,WLocId from grn g , customer c , grn_qty gq where g.CusId = c.CustomerId and g.GRNNo = gq.GRNNo
         ]]>
 	</query>
 	
