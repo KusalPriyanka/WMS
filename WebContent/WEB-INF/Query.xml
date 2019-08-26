@@ -67,6 +67,22 @@
         ]]>
 	</query>
 	
+	<!-- Create table Item Query -->
+	<query id="create_item_table">
+        <![CDATA[
+			CREATE TABLE `testdww`.`customer` (
+			  `CustomerId` VARCHAR(10) NOT NULL,
+			  `CusName` VARCHAR(75) NOT NULL,
+			  `Address` VARCHAR(100) NOT NULL,
+			  `Email` VARCHAR(45) NOT NULL,
+			  `MobileNo` VARCHAR(10) NOT NULL,
+			  `PayMethod` TINYINT NOT NULL,
+			  `CusRef` VARCHAR(20) NOT NULL,
+			  PRIMARY KEY (`CustomerId`),
+			  UNIQUE INDEX `CustomerId_UNIQUE` (`CustomerId` ASC) VISIBLE);
+        ]]>
+	</query>
+	
 	<!-- DROP TABLES -->
 	<query id="drop_table_function">
          <![CDATA[        

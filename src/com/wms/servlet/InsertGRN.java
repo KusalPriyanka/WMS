@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.wms.model.GRN;
+import com.wms.model.GRN_Qty;
 import com.wms.service.GoodHandlingServiceImpl;
 import com.wms.service.IGoodHandlingService;
 
@@ -28,25 +29,55 @@ public class InsertGRN extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
+		IGoodHandlingService iGoodHandlingService = new GoodHandlingServiceImpl();;
+		String step = request.getParameter("step");
+		
 		response.setContentType("text/html");
-		/*
-		GRN GRN = new GRN();
-		GRN.setGRNNo(request.getParameter("GRNNo"));
-		GRN.setDate(request.getParameter("Date"));
-		GRN.setVehicleNo(request.getParameter("VehicleNum"));
-		GRN.setContainerNo(request.getParameter("ContainerNo"));
-		GRN.setTrailerNo(request.getParameter("TrailerNo"));
-		GRN.setCusId(request.getParameter("cusId"));
-		GRN.setsTime(request.getParameter("STime"));
-		GRN.seteTime(request.getParameter("ETime"));
-		GRN.setNoOfItems(Integer.parseInt(request.getParameter("NoOfProducts")));
 		
-		IGoodHandlingService iGoodHandlingService = new GoodHandlingServiceImpl();
-		iGoodHandlingService.addGRN(GRN); */
+		if(step.equals("1")) {
+			
+			GRN GRN = new GRN();
+			GRN.setGRNNo(request.getParameter("GRNNo"));
+			GRN.setDate(request.getParameter("Date"));
+			GRN.setVehicleNo(request.getParameter("VehicleNum"));
+			GRN.setContainerNo(request.getParameter("ContainerNo"));
+			GRN.setTrailerNo(request.getParameter("TrailerNo"));
+			GRN.setCusId(request.getParameter("cusId"));
+			GRN.setsTime(request.getParameter("STime"));
+			GRN.seteTime(request.getParameter("ETime"));
+			GRN.setNoOfItems(Integer.parseInt(request.getParameter("NoOfProducts")));
+			
+			iGoodHandlingService.addGRN(GRN);
+			
+			request.setAttribute("GRNNo", request.getParameter("GRNNo"));
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/views/GoodHandling/goodreceive_s2.jsp");
+			dispatcher.forward(request, response); 
+
+		}
 		
-		request.setAttribute("GRNNo", request.getParameter("GRNNo"));
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/views/GoodHandling/goodreceive_s2.jsp");
-		dispatcher.forward(request, response);		
+		else if(step.equals("2")) {
+			
+			GRN_Qty grn_Qty = new GRN_Qty();
+			grn_Qty.setId(1);
+			grn_Qty.setGRNNo(request.getParameter("GRNNo"));
+			grn_Qty.setItemId(Integer.parseInt(request.getParameter("itemId")));
+			grn_Qty.setQty(Float.parseFloat(request.getParameter("qty")));
+			grn_Qty.setUom(request.getParameter("uom"));
+			grn_Qty.setSeqFeet(Integer.parseInt(request.getParameter("sf")));
+			grn_Qty.setCBM(Integer.parseInt(request.getParameter("cbm")));
+			grn_Qty.setwLocId(request.getParameter("wLoc"));
+			grn_Qty.setDamageQty(Integer.parseInt(request.getParameter("dQty")));
+			grn_Qty.setStatus(request.getParameter("status"));
+			grn_Qty.setRemark(request.getParameter("remark"));
+			
+			iGoodHandlingService.addGRNQty(grn_Qty);
+			
+			request.setAttribute("GRNNo", request.getParameter("GRNNo"));
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/views/GoodHandling/overviewgrn.jsp");
+			dispatcher.forward(request, response);	
+			
+			
+		}
 		
 	}
 

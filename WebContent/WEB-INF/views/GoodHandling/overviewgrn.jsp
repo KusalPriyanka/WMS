@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.wms.service.GoodHandlingServiceImpl"%>
+<%@page import="com.wms.service.IGoodHandlingService"%>
 <html lang="en">
 
 <head>
@@ -318,6 +320,11 @@
 
         </nav>
         <!-- End of Topbar -->
+        
+        <%  
+        	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
+        	
+        %>
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
@@ -339,45 +346,38 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Customer Name</th>
                       <th>GRN No</th>
-                      <th>UOM</th>
+                      <th>Customer Name</th>
+                      <th>Vehicle No</th>
                       <th>Square Feet</th>
                       <th>Date</th>
+                      <th>Warehouse Loc</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                        <th>Customer Name</th>
-                        <th>GRN No</th>
-                        <th>UOM</th>
-                        <th>Square Feet</th>
-                        <th>Date</th>
-                        <th></th>
+                      <th>GRN No</th>
+                      <th>Customer Name</th>
+                      <th>Vehicle No</th>
+                      <th>Square Feet</th>
+                      <th>Date</th>
+                      <th>Warehouse Loc</th>
+                      <th></th>
                       </tr>
                   </tfoot>
                 <tbody>
                     <tr>
-                        <td>Kusal Priyanka</td>
                         <td>Kus_GRN_01</td>
-                        <td>Bags</td>
+                        <td>Perera K K P</td>
+                        <td>WP 1243</td>
                         <td>60</td>
                         <td>2019/04/25</td>
+                        <td>A10</td>
                         <td><center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
                         <button type="button" class="btn btn-danger">Delete</button>
                         </center></td>
                     </tr>
-                    <tr>
-                        <td>Lakmal Perera</td>
-                        <td>Lak_GRN_01</td>
-                        <td>Plates</td>
-                        <td>35</td>
-                        <td>2019/02/15</td>
-                        <td><center><button type="button" class="btn btn-success">Update</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
-                        </center></td>
-                      </tr>
                 </tbody>
             </table>
             </div>

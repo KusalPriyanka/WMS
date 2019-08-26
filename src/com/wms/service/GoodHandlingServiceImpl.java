@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.wms.model.GRN;
+import com.wms.model.GRN_Qty;
 import com.wms.util.CommonConstants;
 import com.wms.util.DBConnectionUtil;
 import com.wms.util.QueryUtil;
@@ -31,14 +32,17 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 	
 	static{
 		//create table or drop if exist
-		createEmployeeTable();
+		createTable();
 	}
 	
-	public static void createEmployeeTable() {
+	private static void createTable() {
 
 		try {
 			connection = DBConnectionUtil.getDBConnection();
 			statement = connection.createStatement();
+			
+			//Create Stored Procedure to drop tables 
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_DROP_TABLE_FUNCTION));
 			
 			// Drop table if already exists and as per SQL query available in
 
@@ -49,9 +53,21 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_CUSTOMER_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_QTY_TABLE));
+			
 
 		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
+			
 			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (Exception e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
 			
 		}
 		
@@ -170,6 +186,50 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 		return grnlist;
 		
+	}
+
+	@Override
+	public void addGRNQty(GRN_Qty grn_Qty) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_INSERT_GRN_QTY));
+			connection.setAutoCommit(false);
+			
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_ONE, grn_Qty.getId());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, grn_Qty.getGRNNo());
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_THREE, grn_Qty.getItemId());
+			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_FOUR, grn_Qty.getQty());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_FIVE, grn_Qty.getUom());
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_SIX, grn_Qty.getSeqFeet());
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_SEVEN, grn_Qty.getCBM());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_EIGHT, grn_Qty.getwLocId());
+			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_NINE, grn_Qty.getDamageQty());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TEN, grn_Qty.getStatus());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ELEVEN, grn_Qty.getRemark());
+			
+			preparedStatement.execute();
+			connection.commit();
+	
+		} catch (Exception e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+			
 	}
 
 }

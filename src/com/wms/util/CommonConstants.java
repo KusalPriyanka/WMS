@@ -31,6 +31,9 @@ public class CommonConstants {
 
 	/** Constant for driver name key of MySQL database in config.properties */
 	public static final String DRIVER_NAME = "driverName";
+	
+	/** Constant for query id of drop_table in Query.xml */
+	public static final String QUERY_ID_DROP_TABLE_FUNCTION = "drop_table_function";
 
 	/** Constant for query id of drop_table in Query.xml */
 	public static final String QUERY_ID_DROP_TABLE = "drop_table";
@@ -48,6 +51,9 @@ public class CommonConstants {
 	
 	/** Constant for query id of get specific GRN in Query.xml */
 	public static final String QUERY_ID_GET_GRN = "GRN_by_id";
+	
+	/** Constant for query id of insert GRN QTY in Query.xml */
+	public static final String QUERY_ID_INSERT_GRN_QTY = "insert_GRN_QTY";
 
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;
@@ -72,5 +78,14 @@ public class CommonConstants {
 	
 	/** Constant for Column index eight */
 	public static final int COLUMN_INDEX_EIGHT = 8;
+	
+	/** Constant for Column index nine */
+	public static final int COLUMN_INDEX_NINE = 9;
+	
+	/** Constant for Column index ten */
+	public static final int COLUMN_INDEX_TEN = 10;
+	
+	/** Constant for Column index eleven */
+	public static final int COLUMN_INDEX_ELEVEN = 11;
 	
 }
