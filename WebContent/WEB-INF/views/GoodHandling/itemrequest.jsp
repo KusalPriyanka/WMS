@@ -326,7 +326,7 @@
               
             <div class="row m-2 justify-content-center m-4">
                 <div class="col-md-10">
-                  <form action="#" method="POST">
+                  <form action="InsertItem" method="POST">
                       <div class="form-group">
                         <div class="form-row">
                               <label for="GRNNumber">Item Code :</label>
@@ -336,19 +336,19 @@
                       <div class="form-group">
                         <div class="form-row">
                             <label for="GRNNumber">Enter Item Name :</label>
-                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="Item Name">       
+                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="Item Name" name="itemName">       
                         </div>
                       </div>
                       <div class="form-group">
                           <div class="form-row">
                             <label for="trailerNo">Enter Description :</label>
-                            <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Description">
+                            <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Description" name="itemDes">
                           </div>
                       </div>
                       <div class="form-group">
                             <div class="form-row">
                               <label for="trailerNo">Enter Remark :</label>
-                              <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Remark">
+                              <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Remark" name="itemRemark">
                             </div>
                         </div>
                       <button type="submit" class="btn btn-primary btn-icon-split mt-2">

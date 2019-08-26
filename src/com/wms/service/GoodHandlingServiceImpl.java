@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
+import com.wms.model.Item;
 import com.wms.util.CommonConstants;
 import com.wms.util.DBConnectionUtil;
 import com.wms.util.QueryUtil;
@@ -53,6 +54,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_CUSTOMER_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_QTY_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_ITEM_TABLE));
 			
 
 		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
@@ -230,6 +232,42 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			}
 		}
 			
+	}
+
+	@Override
+	public void addItem(Item item) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_INSERT_ITEM));
+			connection.setAutoCommit(false);
+			
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, item.getItemName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, item.getItemDes());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, item.getRemark());
+			
+			preparedStatement.execute();
+			connection.commit();
+			
+		} catch (Exception e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
 	}
 
 }

@@ -42,6 +42,7 @@ public class CommonConstants {
 	public static final String QUERY_ID_CREATE_CUSTOMER_TABLE = "create_customer_table";
 	public static final String QUERY_ID_CREATE_GRN_TABLE = "create_GRN_table";
 	public static final String QUERY_ID_CREATE_GRN_QTY_TABLE = "create_GRN_Qty_table";
+	public static final String QUERY_ID_CREATE_ITEM_TABLE = "create_item_table";
 	
 	/** Constant for query id of insert GRN in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN = "insert_GRN";
@@ -54,6 +55,9 @@ public class CommonConstants {
 	
 	/** Constant for query id of insert GRN QTY in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN_QTY = "insert_GRN_QTY";
+	
+	/** Constant for query id of insert Item in Query.xml */
+	public static final String QUERY_ID_INSERT_ITEM = "insert_ITEM";
 
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

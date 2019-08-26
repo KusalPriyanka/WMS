@@ -70,16 +70,15 @@
 	<!-- Create table Item Query -->
 	<query id="create_item_table">
         <![CDATA[
-			CREATE TABLE `testdww`.`customer` (
-			  `CustomerId` VARCHAR(10) NOT NULL,
-			  `CusName` VARCHAR(75) NOT NULL,
-			  `Address` VARCHAR(100) NOT NULL,
-			  `Email` VARCHAR(45) NOT NULL,
-			  `MobileNo` VARCHAR(10) NOT NULL,
-			  `PayMethod` TINYINT NOT NULL,
-			  `CusRef` VARCHAR(20) NOT NULL,
-			  PRIMARY KEY (`CustomerId`),
-			  UNIQUE INDEX `CustomerId_UNIQUE` (`CustomerId` ASC) VISIBLE);
+			CREATE TABLE `testdww`.`item` (
+			  `itemId` INT NOT NULL AUTO_INCREMENT,
+			  `itemName` VARCHAR(50) NOT NULL,
+			  `itemDescrption` VARCHAR(80) NOT NULL,
+			  `remark` VARCHAR(80) NOT NULL,
+			  `paymentMethod` INT NOT NULL DEFAULT -1,
+			  `price` FLOAT NOT NULL DEFAULT -1,
+			  `uom` VARCHAR(45) NOT NULL DEFAULT 'None',
+			  PRIMARY KEY (`itemId`));
         ]]>
 	</query>
 	
@@ -127,6 +126,13 @@
 	<query id="all_GRNS">
          <![CDATA[        
             select g.GRNNo,CusName,VehicleNo,SeqFeet,Date,WLocId from grn g , customer c , grn_qty gq where g.CusId = c.CustomerId and g.GRNNo = gq.GRNNo
+        ]]>
+	</query>
+	
+	<!-- INSERT ITEM QUERY -->
+	<query id="insert_ITEM">
+        <![CDATA[
+          	insert into item(itemName,itemDescrption,remark) values(?, ?, ?)
         ]]>
 	</query>
 	

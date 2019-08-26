@@ -354,7 +354,7 @@
                       <div class="form-group">
                         <div class="form-row">
                             <div class="col pl-0">
-                                <label for="exampleFormControlSelect1">Select Payment Type :</label>
+                                <label for="exampleFormControlSelect1">Payment Type :</label>
                                 <select class="form-control form-control-sm" id="exampleFormControlSelect1">
                                   <option>CBM</option>
                                   <option>Square Feet</option>
@@ -371,7 +371,7 @@
                       </div>
                       <div class="form-group">
                           <div class="form-row">
-                              <div class="col pl-0">
+                              <div class="col-md-6 pl-0">
                                   <label for="exampleFormControlSelect1">Select Unit Of Measurement :</label>
                                   <select class="form-control form-control-sm" id="exampleFormControlSelect1">
                                     <option>Bags</option>
