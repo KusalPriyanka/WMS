@@ -129,6 +129,13 @@
         ]]>
 	</query>
 	
+	<!-- INSERT GET ITEM CODE QUERY -->
+	<query id="get_Item_Code">
+        <![CDATA[
+          	select count(itemId) as count from item
+        ]]>
+	</query>
+	
 	<!-- INSERT ITEM QUERY -->
 	<query id="insert_ITEM">
         <![CDATA[
