@@ -270,4 +270,44 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 	}
 
+	@Override
+	public int getItemCode() {
+		
+		int itemCount = 0;
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_ITEM_CODE));
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				itemCount = resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE);
+				
+			}
+			
+		} catch (Exception e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return ++itemCount;
+	}
+
 }

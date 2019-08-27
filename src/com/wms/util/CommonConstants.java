@@ -58,6 +58,9 @@ public class CommonConstants {
 	
 	/** Constant for query id of insert Item in Query.xml */
 	public static final String QUERY_ID_INSERT_ITEM = "insert_ITEM";
+	
+	/** Constant for query id of get itemcode in Query.xml */
+	public static final String QUERY_ID_GET_ITEM_CODE = "get_Item_Code";
 
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

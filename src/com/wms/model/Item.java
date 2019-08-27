@@ -2,7 +2,7 @@ package com.wms.model;
 
 public class Item {
 
-	private String itemId;
+	private int itemId;
 	private String itemName;
 	private String itemDes;
 	private String remark;
@@ -12,7 +12,7 @@ public class Item {
 	
 	public Item() { }
 
-	public Item(String itemId, String itemName, String itemDes, String remark, int paymentMethod, float price,
+	public Item(int itemId, String itemName, String itemDes, String remark, int paymentMethod, float price,
 			String uom) {
 		super();
 		this.itemId = itemId;
@@ -24,11 +24,11 @@ public class Item {
 		this.uom = uom;
 	}
 
-	public String getItemId() {
+	public int getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(String itemId) {
+	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 

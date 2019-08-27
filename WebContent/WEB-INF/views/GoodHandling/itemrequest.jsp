@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.wms.service.GoodHandlingServiceImpl"%>
+<%@page import="com.wms.service.IGoodHandlingService"%>
 <html lang="en">
 
 <head>
@@ -323,6 +325,10 @@
             <div class="row m-2">
                 <h1 class="h3 font-weight-bold text-primary">Request New Item</h1>
             </div>
+            
+            <%
+            	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
+            %>
               
             <div class="row m-2 justify-content-center m-4">
                 <div class="col-md-10">
@@ -330,7 +336,7 @@
                       <div class="form-group">
                         <div class="form-row">
                               <label for="GRNNumber">Item Code :</label>
-                              <input type="text" class="form-control form-control-sm" id="GRNNumber" value="Item-01" readonly>
+                              <input type="text" class="form-control form-control-sm" id="GRNNumber" value="<%= "Item-"+ goodHandlingService.getItemCode() %>" readonly>
                         </div>
                       </div>
                       <div class="form-group">
@@ -350,7 +356,8 @@
                               <label for="trailerNo">Enter Remark :</label>
                               <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Remark" name="itemRemark">
                             </div>
-                        </div>
+                       </div>
+                       <input type="hidden" value="<%= goodHandlingService.getItemCode() %>" name="itemCode" />
                       <button type="submit" class="btn btn-primary btn-icon-split mt-2">
                           <span class="icon text-white-50">
                               <i class="fas fa-arrow-right"></i>

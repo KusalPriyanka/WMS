@@ -19,12 +19,14 @@ public class InsertItem extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Item item = new Item();
+		item.setItemId(Integer.parseInt(request.getParameter("itemCode")));
 		item.setItemName(request.getParameter("itemName"));
 		item.setItemDes(request.getParameter("itemDes"));
 		item.setRemark(request.getParameter("itemRemark"));
 		
 		IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
 		goodHandlingService.addItem(item);
+		
 	}
 
 }
