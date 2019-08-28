@@ -125,7 +125,7 @@
 	<!-- Select all GRN -->
 	<query id="all_GRNS">
          <![CDATA[        
-            select g.GRNNo,CusName,VehicleNo,SeqFeet,Date,WLocId from grn g , customer c , grn_qty gq where g.CusId = c.CustomerId and g.GRNNo = gq.GRNNo
+            
         ]]>
 	</query>
 	
