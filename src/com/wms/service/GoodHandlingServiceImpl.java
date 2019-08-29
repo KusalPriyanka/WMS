@@ -16,6 +16,7 @@ import org.xml.sax.SAXException;
 
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
+import com.wms.model.GRN_Show;
 import com.wms.model.Item;
 import com.wms.util.CommonConstants;
 import com.wms.util.DBConnectionUtil;
@@ -117,22 +118,70 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		}
 		
 	}
+	
+	@Override
+	public ArrayList<GRN_Show> getGRNTable() {
+		
+		ArrayList<GRN_Show> grnlist = new ArrayList<GRN_Show>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GRN_TABLE));
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				GRN_Show grn_Show = new GRN_Show();
+				grn_Show.setCusName(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+				grn_Show.setGRNNo(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				grn_Show.setItemName(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+				grn_Show.setQty(resultSet.getFloat(CommonConstants.COLUMN_INDEX_FOUR));				
+				grn_Show.setSqFeet(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE));
+				grn_Show.setwLoc(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
+				grn_Show.setDate(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+				
+				grnlist.add(grn_Show);
+			}
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+			
+		}
+				
+		return grnlist;
+	}
 
 	@Override
 	public GRN getGRNById(String GRNNo) {
 
-		return actionGRN(GRNNo).get(0);
+		GRN_Show grn_Show = actionGRN(GRNNo).get(0);
+		
+		return grn_Show.getGRN();
 	}
 	
 	@Override
-	public ArrayList<GRN> getGRNs() {
+	public ArrayList<GRN_Show> getGRNs() {
 		
 		return actionGRN(null);
 	}
 	
-	private ArrayList<GRN> actionGRN(String GRNNo){
+	private ArrayList<GRN_Show> actionGRN(String GRNNo){
 		
-		ArrayList<GRN> grnlist = new ArrayList<GRN>();
+		ArrayList<GRN_Show> grnlist = new ArrayList<GRN_Show>();
 		
 		try {
 			
@@ -164,8 +213,23 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 				grn.setsTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
 				grn.seteTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
 				grn.setCusId(resultSet.getString(CommonConstants.COLUMN_INDEX_EIGHT));
-				grnlist.add(grn);
 				
+				GRN_Qty grn_Qty = new GRN_Qty();
+				grn_Qty.setId(resultSet.getInt(9));
+				grn_Qty.setGRNNo(resultSet.getString(10));
+				grn_Qty.setItemId(resultSet.getInt(11));
+				grn_Qty.setQty(resultSet.getFloat(12));
+				grn_Qty.setUom(resultSet.getString(13));
+				grn_Qty.setSeqFeet(resultSet.getInt(14));
+				grn_Qty.setCBM(resultSet.getInt(15));
+				grn_Qty.setwLocId(resultSet.getString(16));
+				grn_Qty.setDamageQty(resultSet.getFloat(17));
+				grn_Qty.setStatus(resultSet.getString(18));
+				grn_Qty.setRemark(resultSet.getString(19));
+						
+				
+				grnlist.add(new GRN_Show(grn, grn_Qty));
+								
 			}
 			
 		} catch (Exception e) {
@@ -309,5 +373,6 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 		return ++itemCount;
 	}
+
 
 }

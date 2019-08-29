@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
+import com.wms.model.GRN_Show;
 import com.wms.model.Item;
 
 public interface IGoodHandlingService {
@@ -15,7 +16,9 @@ public interface IGoodHandlingService {
 	
 	public GRN getGRNById(String GRNNo);
 	
-	public ArrayList<GRN> getGRNs();
+	public ArrayList<GRN_Show> getGRNs();
+	
+	public ArrayList<GRN_Show> getGRNTable();
 	
 	//Item
 	public int getItemCode();
