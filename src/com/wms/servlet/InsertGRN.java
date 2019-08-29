@@ -58,7 +58,6 @@ public class InsertGRN extends HttpServlet {
 		else if(step.equals("2")) {
 			
 			GRN_Qty grn_Qty = new GRN_Qty();
-			grn_Qty.setId(1);
 			grn_Qty.setGRNNo(request.getParameter("GRNNo"));
 			grn_Qty.setItemId(Integer.parseInt(request.getParameter("itemId")));
 			grn_Qty.setQty(Float.parseFloat(request.getParameter("qty")));

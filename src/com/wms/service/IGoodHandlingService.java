@@ -16,9 +16,9 @@ public interface IGoodHandlingService {
 	
 	public GRN getGRNById(String GRNNo);
 	
-	public ArrayList<GRN_Show> getGRNs();
+	public ArrayList<GRN> getGRNs();
 	
-	public ArrayList<GRN_Show> getGRNTable();
+	public String getCustomerName(String cusID);
 	
 	//Item
 	public int getItemCode();

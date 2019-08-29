@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.wms.model.GRN"%>
 <%@page import="com.wms.model.GRN_Show"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.wms.service.GoodHandlingServiceImpl"%>
@@ -325,7 +326,7 @@
         
         <%  
         	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-        	ArrayList<GRN_Show> GRNList = goodHandlingService.getGRNTable();
+        	ArrayList<GRN> GRNList = goodHandlingService.getGRNs();
 
         %>
 
@@ -351,10 +352,9 @@
                     <tr>
                       <th>GRN No</th>
                       <th>Customer Name</th>
-                      <th>Item Name</th>
-                      <th>Square Feet</th>
-                      <th>QTY</th>                   
-                      <th>Warehouse Loc</th>
+                      <th>Vehicle No</th>
+                      <th>Container No</th>
+                      <th>Trailer No</th>                   
                       <th>Date</th>
                       <th></th>
                     </tr>
@@ -363,10 +363,9 @@
                     <tr>
                       <th>GRN No</th>
                       <th>Customer Name</th>
-                      <th>Item Name</th>
-                      <th>Square Feet</th>
-                      <th>QTY</th>                   
-                      <th>Warehouse Loc</th>
+                      <th>Vehicle No</th>
+                      <th>Container No</th>
+                      <th>Trailer No</th>                   
                       <th>Date</th>
                       <th></th>
                       </tr>
@@ -374,16 +373,15 @@
                 <tbody>
                 
                 <%
-                	for(GRN_Show GS : GRNList){
+                	for(GRN GS : GRNList){
                 %>
                 
                     <tr>
                         <td><%= GS.getGRNNo() %></td>
-                        <td><%= GS.getCusName() %></td>
-                        <td><%= GS.getItemName() %></td>
-                        <td><%= GS.getSqFeet() %></td>
-                        <td><%= GS.getQty() %></td>
-                        <td><%= GS.getwLoc() %></td>
+                        <td><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
+                        <td><%= GS.getVehicleNo() %></td>
+                        <td><%= GS.getContainerNo() %></td>
+                        <td><%= GS.getTrailerNo() %></td>
                         <td><%= GS.getDate() %></td>
                         <td><center>
                         <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#show"><i class="fas fa-eye"></i></button>
