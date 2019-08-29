@@ -9,7 +9,7 @@
 <body>
 	
 	<%--  <jsp:include page="\WEB-INF\views\Manager\index.jsp"></jsp:include> --%>
-	<jsp:include page="WEB-INF/views/GoodHandling/itemrequest.jsp"></jsp:include>
+	<jsp:include page="WEB-INF/views/GoodHandling/overviewgrn.jsp"></jsp:include>
 	
 </body>
 </html>

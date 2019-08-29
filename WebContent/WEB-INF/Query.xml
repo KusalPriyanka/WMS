@@ -123,9 +123,18 @@
 	</query>
 
 	<!-- Select all GRN -->
+	<query id="all_GRNS_Table">
+         <![CDATA[        
+            select c.cusName,g.GRNNo,i.itemName,gq.Qty,gq.SeqFeet,gq.WLocId,g.Date 
+			from grn g , grn_qty gq, customer c , item i 
+			where g.GRNNo = gq.GRNNO AND gq.ItemId = i.itemId AND g.CusId = c.CustomerId;
+        ]]>
+	</query>
+	
+	<!-- Select all GRN For Table-->
 	<query id="all_GRNS">
          <![CDATA[        
-            
+            select * from grn g, grn_qty gq where g.GRNNo = gq.GRNNO
         ]]>
 	</query>
 	

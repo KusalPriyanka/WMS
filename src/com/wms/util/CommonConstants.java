@@ -53,6 +53,9 @@ public class CommonConstants {
 	/** Constant for query id of get specific GRN in Query.xml */
 	public static final String QUERY_ID_GET_GRN = "GRN_by_id";
 	
+	/** Constant for query id of get specific GRN in Query.xml */
+	public static final String QUERY_ID_GET_GRN_TABLE = "all_GRNS_Table";
+	
 	/** Constant for query id of insert GRN QTY in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN_QTY = "insert_GRN_QTY";
 	

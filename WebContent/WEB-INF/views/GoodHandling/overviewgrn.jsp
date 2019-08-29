@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="com.wms.model.GRN_Show"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.wms.service.GoodHandlingServiceImpl"%>
 <%@page import="com.wms.service.IGoodHandlingService"%>
 <html lang="en">
@@ -323,7 +325,8 @@
         
         <%  
         	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-        	
+        	ArrayList<GRN_Show> GRNList = goodHandlingService.getGRNTable();
+
         %>
 
         <!-- Begin Page Content -->
@@ -348,10 +351,11 @@
                     <tr>
                       <th>GRN No</th>
                       <th>Customer Name</th>
-                      <th>Vehicle No</th>
+                      <th>Item Name</th>
                       <th>Square Feet</th>
-                      <th>Date</th>
+                      <th>QTY</th>                   
                       <th>Warehouse Loc</th>
+                      <th>Date</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -359,39 +363,55 @@
                     <tr>
                       <th>GRN No</th>
                       <th>Customer Name</th>
-                      <th>Vehicle No</th>
+                      <th>Item Name</th>
                       <th>Square Feet</th>
-                      <th>Date</th>
+                      <th>QTY</th>                   
                       <th>Warehouse Loc</th>
+                      <th>Date</th>
                       <th></th>
                       </tr>
                   </tfoot>
                 <tbody>
+                
+                <%
+                	for(GRN_Show GS : GRNList){
+                %>
+                
                     <tr>
-                        <td>Kus_GRN_01</td>
-                        <td>Perera K K P</td>
-                        <td>WP 1243</td>
-                        <td>60</td>
-                        <td>2019/04/25</td>
-                        <td>A10</td>
-                        <td><center><button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter">Update</button>
-                        <button type="button" class="btn btn-danger">Delete</button>
+                        <td><%= GS.getGRNNo() %></td>
+                        <td><%= GS.getCusName() %></td>
+                        <td><%= GS.getItemName() %></td>
+                        <td><%= GS.getSqFeet() %></td>
+                        <td><%= GS.getQty() %></td>
+                        <td><%= GS.getwLoc() %></td>
+                        <td><%= GS.getDate() %></td>
+                        <td><center>
+                        <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#show"><i class="fas fa-eye"></i></button>
+                        <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#update"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></button>
                         </center></td>
                     </tr>
+                    
+                 <%
+                	}
+                 %>   
+                    
                 </tbody>
             </table>
             </div>
             </div>
         </div>
         </div>
-          </div>
+        </div>
         <!-- /.container-fluid -->
+        
+      
 
       </div>
       <!-- End of Main Content -->
 
       <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -401,7 +421,28 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                ...
+                update
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+              <!-- Modal -->
+        <div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Kus_GRN_01</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                show
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
