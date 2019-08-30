@@ -137,6 +137,13 @@
         ]]>
 	</query>
 	
+	<!-- GRN QTY view -->
+	<query id="get_GRN_View">
+         <![CDATA[        
+            select ItemId,Qty,UOM,SeqFeet,CBM,WLocId,DamageQty,Status,Remark from grn_qty where GRNNo = ?
+        ]]>
+	</query>
+	
 	<!-- INSERT GET ITEM CODE QUERY -->
 	<query id="get_Item_Code">
         <![CDATA[
@@ -148,6 +155,13 @@
 	<query id="insert_ITEM">
         <![CDATA[
           	insert into item(itemName,itemDescrption,remark) values(?, ?, ?)
+        ]]>
+	</query>
+	
+		<!-- GET ITEM NAME QUERY -->
+	<query id="GET_ITEM_NAME">
+        <![CDATA[
+          	select itemName from item where itemId = ?
         ]]>
 	</query>
 	

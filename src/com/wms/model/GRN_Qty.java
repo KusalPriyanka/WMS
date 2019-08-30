@@ -5,6 +5,7 @@ public class GRN_Qty {
 	private int id;
 	private String GRNNo;
 	private int itemId;
+	private String itemDes;
 	private float qty;
 	private String uom;
 	private int seqFeet;
@@ -118,6 +119,14 @@ public class GRN_Qty {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getItemDes() {
+		return itemDes;
+	}
+
+	public void setItemDes(String itemDes) {
+		this.itemDes = itemDes;
 	}
 
 	@Override

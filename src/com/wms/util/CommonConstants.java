@@ -59,11 +59,17 @@ public class CommonConstants {
 	/** Constant for query id of insert GRN QTY in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN_QTY = "insert_GRN_QTY";
 	
+	/** Constant for query id of get GRN QTY view in Query.xml */
+	public static final String QUERY_ID_GET_GRNQTY_VIEW = "get_GRN_View";
+	
 	/** Constant for query id of insert Item in Query.xml */
 	public static final String QUERY_ID_INSERT_ITEM = "insert_ITEM";
 	
 	/** Constant for query id of get itemcode in Query.xml */
 	public static final String QUERY_ID_GET_ITEM_CODE = "get_Item_Code";
+	
+	/** Constant for query id of get Item name in Query.xml */
+	public static final String QUERY_ID_GET_ITEM_NAME = "GET_ITEM_NAME";
 
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

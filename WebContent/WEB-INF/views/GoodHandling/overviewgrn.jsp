@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="com.wms.model.GRN_Qty"%>
 <%@page import="com.wms.model.GRN"%>
 <%@page import="com.wms.model.GRN_Show"%>
 <%@page import="java.util.ArrayList"%>
@@ -24,7 +25,7 @@
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
   <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -377,14 +378,14 @@
                 %>
                 
                     <tr>
-                        <td><%= GS.getGRNNo() %></td>
+                        <td class="grn"><%= GS.getGRNNo() %></td>
                         <td><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
                         <td><%= GS.getVehicleNo() %></td>
                         <td><%= GS.getContainerNo() %></td>
                         <td><%= GS.getTrailerNo() %></td>
                         <td><%= GS.getDate() %></td>
                         <td><center>
-                        <button type="button" class="btn btn-warning btn-circle" data-toggle="modal" data-target="#show"><i class="fas fa-eye"></i></button>
+                        <button type="button" class="btnshow btn btn-warning btn-circle"><i class="fas fa-eye"></i></button>
                         <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#update"><i class="fas fa-edit"></i></button>
                         <button type="button" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></button>
                         </center></td>
@@ -409,8 +410,8 @@
       <!-- End of Main Content -->
 
       <!-- Modal -->
-        <div class="modal fade" id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade bd-example-modal-lg" id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">Kus_GRN_01</h5>
@@ -430,21 +431,37 @@
         </div>
         
               <!-- Modal -->
-        <div class="modal fade" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal fade bd-example-modal-lg" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Kus_GRN_01</h5>
+                <h5 class="modal-title" id="showId"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
-                show
+                <div class="row m-0">
+                <div id="grntable"></div>
+				<table class="table table-hover" id="grn_qty">
+				  <thead>
+				    <tr class="bg-primary text-white">
+				      <th scope="col">Item Name</th>
+				      <th scope="col">QTY</th>
+				      <th scope="col">UOM</th>
+				      <th scope="col">CBM</th>
+				      <th scope="col">WLoc</th>
+				      <th scope="col">DamageQty</th>
+				      <th scope="col">Status</th>
+				      <th scope="col">Remark</th>
+				    </tr>
+				  </thead>
+				</table>			
+                </div>
+
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
             </div>
@@ -506,6 +523,47 @@
   
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+    
+    <script>
+    
+     $(".btnshow").click(function() {
+        var $row = $(this).closest("tr");    // Find the row
+        var $grn = $row.find(".grn").text(); // Find the text
+		
+	    $.ajax({
+	        url      : 'showGRNQty',
+	        method   : 'GET', 
+	        data     : {grn: $grn},
+	        success  : function(response){
+	        	
+	        	var grnqty = $.parseJSON(response);
+	        	$("#grn_qty td").remove();
+	        	
+	        	$(function() {
+	        		$.each(grnqty, function(i, grnQ) {
+				        var $tr = $('<tr>').append(
+					            $('<td>').text(grnQ.itemDes),
+					            $('<td>').text(grnQ.qty),
+					            $('<td>').text(grnQ.uom),
+					            $('<td>').text(grnQ.CBM),
+					            $('<td>').text(grnQ.wLocId),
+					            $('<td>').text(grnQ.damageQty),
+					            $('<td>').text(grnQ.status),
+					            $('<td>').text(grnQ.remark)
+					        ); 
+					        $('#grn_qty').append($tr);
+					        $('#showId').text(grnQ.GRNNo);
+	        		});
+	        	});
+	        	
+	        	$('#show').modal('toggle'); 
+				
+	      }
+	    });
+    }); 
+    
+    
+    </script>
 
 </body>
 

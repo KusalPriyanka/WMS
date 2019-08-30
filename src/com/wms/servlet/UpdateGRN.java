@@ -24,8 +24,8 @@ public class UpdateGRN extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-		GRN grn = goodHandlingService.getGRNById("GRN01");
+		//IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
+		//GRN grn = goodHandlingService.getGRNById("GRN01");
 		
 	}
 
