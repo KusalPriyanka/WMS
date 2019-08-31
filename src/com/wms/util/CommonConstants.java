@@ -56,6 +56,15 @@ public class CommonConstants {
 	/** Constant for query id of get specific Customer Name in Query.xml */
 	public static final String QUERY_ID_GET_CUSTOMER_NAME = "get_Customer_Name";
 	
+	/** Constant for query id of get specific Customer Name List in Query.xml */
+	public static final String QUERY_ID_GET_CUSTOMER_NAME_LIST = "get_Customer_Name_List";
+	
+	/** Constant for query id of get specific Customer REF in Query.xml */
+	public static final String QUERY_ID_GET_CUSTOMER_REF = "get_Customer_REF";
+	
+	/** Constant for query id of get GRN COUNT in Query.xml */
+	public static final String QUERY_ID_GET_GRN_COUNT_BY_ID = "GRN_COUNT_BY_ID";
+	
 	/** Constant for query id of insert GRN QTY in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN_QTY = "insert_GRN_QTY";
 	

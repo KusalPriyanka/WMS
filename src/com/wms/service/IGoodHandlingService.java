@@ -1,7 +1,9 @@
 package com.wms.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.wms.model.Customer;
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
 import com.wms.model.Item;
@@ -20,6 +22,10 @@ public interface IGoodHandlingService {
 	public String getCustomerName(String cusID);
 	
 	public ArrayList<GRN_Qty> getGRNQTYView(String GRNNo);
+	
+	public ArrayList<Customer> customerList();
+	
+	public String generateGRNNo(String cusId);
 	
 	//Item
 	public int getItemCode();

@@ -137,10 +137,31 @@
         ]]>
 	</query>
 	
+	<!-- Get Customer REFCODE -->
+	<query id="get_Customer_REF">
+         <![CDATA[        
+            select CusRef from customer where CustomerId = ?
+        ]]>
+	</query>
+	
+	<!-- Get Customer Name List-->
+	<query id="get_Customer_Name_List">
+         <![CDATA[        
+            select CustomerId,CusName from customer
+        ]]>
+	</query>
+	
 	<!-- GRN QTY view -->
 	<query id="get_GRN_View">
          <![CDATA[        
             select ItemId,Qty,UOM,SeqFeet,CBM,WLocId,DamageQty,Status,Remark from grn_qty where GRNNo = ?
+        ]]>
+	</query>
+	
+	<!-- GET GRN count -->
+	<query id="GRN_COUNT_BY_ID">
+         <![CDATA[        
+            select count(GRNNo) as count from grn where cusId = ?
         ]]>
 	</query>
 	
@@ -158,7 +179,7 @@
         ]]>
 	</query>
 	
-		<!-- GET ITEM NAME QUERY -->
+	<!-- GET ITEM NAME QUERY -->
 	<query id="GET_ITEM_NAME">
         <![CDATA[
           	select itemName from item where itemId = ?

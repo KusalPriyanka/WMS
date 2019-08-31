@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import com.wms.model.Customer;
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
 import com.wms.model.Item;
@@ -445,4 +447,127 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 	}
 
 
+	@Override
+	public ArrayList<Customer> customerList() {
+		
+		ArrayList<Customer> cusList = new ArrayList<Customer>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_CUSTOMER_NAME_LIST));
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				Customer customer = new Customer();
+				customer.setCustomerId(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+				customer.setCusName(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				cusList.add(customer);
+			}
+			
+				
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return cusList;
+	}
+
+
+	@Override
+	public String generateGRNNo(String cusId) {
+		
+		String GRNNo = "DWW/" + getCustomerRef(cusId) + "/";
+		int count = 0;
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GRN_COUNT_BY_ID));
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, cusId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+					
+				count = resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE);
+
+			}
+			
+			GRNNo += String.format("%02d", ++count);
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		
+		return GRNNo;
+	}
+
+	private String getCustomerRef(String cusId) {
+		
+		String CusRef = null;
+		
+			try {
+				
+				connection = DBConnectionUtil.getDBConnection();
+				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_CUSTOMER_REF));
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, cusId);
+				
+				ResultSet resultSet = preparedStatement.executeQuery();
+				
+				while(resultSet.next()) {
+						
+					CusRef = resultSet.getString(CommonConstants.COLUMN_INDEX_ONE);
+
+				}
+				
+			} catch (Exception e) {
+				log.log(Level.SEVERE, e.getMessage());
+			} finally {
+				
+				try {
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					log.log(Level.SEVERE, e.getMessage());
+				}
+			}
+		
+		return CusRef;	
+		
+	}
 }

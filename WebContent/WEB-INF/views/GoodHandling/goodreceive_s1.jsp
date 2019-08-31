@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<%@page import="com.wms.model.Customer"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Set"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="com.wms.service.GoodHandlingServiceImpl"%>
+<%@page import="com.wms.service.IGoodHandlingService"%>
 <html lang="en">
 
 <head>
@@ -322,23 +329,38 @@
           <div class="row m-2">
               <h1 class="h3 font-weight-bold text-primary">Create New Good Received Notice</h1>
           </div>
+          
+        <%
+
+			IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
+        	ArrayList<Customer> cusList =  goodHandlingService.customerList();		  
+		  
+		%>
             
           <div class="row m-2 justify-content-center m-4">
               <div class="col-md-10">
                 <form action="InsertGRN?step=1" method="POST">
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Select Customer :</label>
-                        <select class="form-control" id="exampleFormControlSelect1" name="cusId">
-                          <option value="01">Mr. Kusal Priyanka</option>
-                          <option value="02">Miss Ruwani Sanjula</option>
-                          <option value="03">Mr. Gimith M.R.</option>
+                        <select class="form-control" id="customerId" name="cusId">
+                        <option disabled selected value> -- Select Customer -- </option>
+                        <%
+                        	for(Customer list : cusList){
+                        %>
+                        
+                          <option value="<%= list.getCustomerId() %>"><%= list.getCusName() %></option>
+						  
+                        <%
+                        	}
+                        %>
+
                         </select>
                     </div>
                     <div class="form-group">
                       <div class="form-row">
                           <div class="col">
                             <label for="GRNNumber">GRN No :</label>
-                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="GRN No" name="GRNNo">
+                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="Please Select Customer" name="GRNNo" readonly>
                           </div>
                           <div class="col">
                               <label for="Date">Select Date :</label>
@@ -360,7 +382,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-row">
-                            <div class="col-md-6">
+                            <div class="col">
                                 <label for="trailerNo">Enter Trailer Number :</label>
                                 <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Enter Trailer Number" name="TrailerNo">
                             </div>
@@ -451,6 +473,35 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+  
+  <script>
+  	
+  document.getElementById('Date').valueAsDate = new Date();
+  
+  $("#customerId").on("change", function(event) { 
+	  
+	  var cusId = $('#customerId').val(); 
+	  var cusRef = $('#cusRef').val();
+	  
+	    $.ajax({
+	        url      : 'InsertGRNValidation?action=1',
+	        method   : 'GET', 
+	        data     : {cusId: cusId},
+	        success  : function(response){ 	
+	        	
+	        	var res = JSON.parse('['+response+']');
+	        	
+	    	    $(function () {
+	  	    	  $('#GRNNumber').val(res);
+	  	    	});
+	      }
+	    });
+	    
+	    
+
+  });
+
+  </script>
 
 </body>
 
