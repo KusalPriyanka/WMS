@@ -5,80 +5,91 @@
 	<!-- Create table Customer Query -->
 	<query id="create_customer_table">
         <![CDATA[
-			CREATE TABLE `testdww`.`customer` (
-			  `CustomerId` VARCHAR(10) NOT NULL,
-			  `CusName` VARCHAR(75) NOT NULL,
-			  `Address` VARCHAR(100) NOT NULL,
-			  `Email` VARCHAR(45) NOT NULL,
-			  `MobileNo` VARCHAR(10) NOT NULL,
-			  `PayMethod` TINYINT NOT NULL,
-			  `CusRef` VARCHAR(20) NOT NULL,
-			  PRIMARY KEY (`CustomerId`),
-			  UNIQUE INDEX `CustomerId_UNIQUE` (`CustomerId` ASC) VISIBLE);
+			CREATE TABLE customer(
+				CustomerId VARCHAR(10) NOT NULL PRIMARY KEY,
+			    CusName VARCHAR(75) NOT NULL,
+			    Address VARCHAR(100) NOT NULL,
+			    Email VARCHAR(45) NOT NULL,
+			    MobileNo VARCHAR(10) NOT NULL,
+			    PayMethod TINYINT NOT NULL,
+			    CusRef VARCHAR(20) NOT NULL
+			);
         ]]>
 	</query>
 	
 	<!-- Create table GRN Query -->
 	<query id="create_GRN_table">
         <![CDATA[
-			CREATE TABLE `testdww`.`grn` (
-			  `GRNNo` VARCHAR(20) NOT NULL,
-			  `VehicleNo` VARCHAR(20) NOT NULL,
-			  `ContainerNo` VARCHAR(20) NOT NULL,
-			  `TrailerNo` VARCHAR(20) NOT NULL,
-			  `Date` DATE NOT NULL,
-			  `STime` VARCHAR(20) NOT NULL,
-			  `ETime` VARCHAR(20) NOT NULL,
-			  `CusId` VARCHAR(10) NOT NULL,
-			  PRIMARY KEY (`GRNNo`),
-			  UNIQUE INDEX `GRNNo_UNIQUE` (`GRNNo` ASC) VISIBLE,
-			  INDEX `Cus_Ref_idx` (`CusId` ASC) VISIBLE,
-			  CONSTRAINT `Cus_Ref`
-			    FOREIGN KEY (`CusId`)
-			    REFERENCES `testdww`.`customer` (`CustomerId`)
-			    ON DELETE NO ACTION
-			    ON UPDATE NO ACTION);
+			CREATE TABLE grn(
+				GRNNo VARCHAR(20) NOT NULL PRIMARY KEY,
+			    VehicleNo VARCHAR(20) NOT NULL,
+			    ContainerNo VARCHAR(20) NOT NULL,
+			    TrailerNo VARCHAR(20) NOT NULL,
+			    Date DATE NOT NULL,
+			    STime VARCHAR(20) NOT NULL,
+			    ETime VARCHAR(20) NOT NULL,
+			    CusId VARCHAR(10) NOT NULL,
+			    FOREIGN KEY (CusId) REFERENCES customer(CustomerId) ON DELETE CASCADE ON UPDATE CASCADE
+			);
         ]]>
 	</query>
 	
 	<!-- Create table GRN_QTY Query -->
 	<query id="create_GRN_Qty_table">
         <![CDATA[
-			CREATE TABLE `testdww`.`grn_qty` (
-			  `id` INT NOT NULL AUTO_INCREMENT,
-			  `GRNNo` VARCHAR(20) NOT NULL,
-			  `ItemId` INT NOT NULL,
-			  `Qty` FLOAT NOT NULL,
-			  `UOM` VARCHAR(45) NOT NULL,
-			  `SeqFeet` INT NOT NULL,
-			  `CBM` INT NOT NULL,
-			  `WLocId` VARCHAR(5) NOT NULL,
-			  `DamageQty` FLOAT NOT NULL,
-			  `Status` VARCHAR(45) NOT NULL,
-			  `Remark` VARCHAR(100) NOT NULL,
-			  PRIMARY KEY (`id`),
-			  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-			  INDEX `GRN_Ref_idx` (`GRNNo` ASC) VISIBLE,
-			  CONSTRAINT `GRN_Ref`
-			    FOREIGN KEY (`GRNNo`)
-			    REFERENCES `testdww`.`grn` (`GRNNo`)
-			    ON DELETE NO ACTION
-			    ON UPDATE NO ACTION);
+			CREATE TABLE grn_qty(
+				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			    GRNNo VARCHAR(20) NOT NULL,
+			    ItemId VARCHAR(10) NOT NULL,
+			    Qty FLOAT NOT NULL,
+			    SeqFeet INT NOT NULL,
+			    CBM INT NOT NULL,
+			    WLocId VARCHAR(5) NOT NULL,
+			    DamageQty FLOAT NOT NULL,
+			    Status VARCHAR(45) NOT NULL,
+			    Remark VARCHAR(100) NOT NULL,
+			    FOREIGN KEY (GRNNo) REFERENCES grn(GRNNo) ON DELETE CASCADE ON UPDATE CASCADE,
+			    FOREIGN KEY (ItemId) REFERENCES item(itemId) ON DELETE CASCADE ON UPDATE CASCADE
+			);
         ]]>
 	</query>
 	
 	<!-- Create table Item Query -->
 	<query id="create_item_table">
         <![CDATA[
-			CREATE TABLE `testdww`.`item` (
-			  `itemId` INT NOT NULL AUTO_INCREMENT,
-			  `itemName` VARCHAR(50) NOT NULL,
-			  `itemDescrption` VARCHAR(80) NOT NULL,
-			  `remark` VARCHAR(80) NOT NULL,
-			  `paymentMethod` INT NOT NULL DEFAULT -1,
-			  `price` FLOAT NOT NULL DEFAULT -1,
-			  `uom` VARCHAR(45) NOT NULL DEFAULT 'None',
-			  PRIMARY KEY (`itemId`));
+			CREATE TABLE item(
+				itemId VARCHAR(10) NOT NULL PRIMARY KEY,
+			    itemName VARCHAR(50) NOT NULL,
+			    itemDescription VARCHAR(80) NOT NULL,
+			    remark VARCHAR(80) NOT NULL,
+			    paymentMethod INT NOT NULL DEFAULT -1,
+			    price FLOAT NOT NULL DEFAULT -1,
+			    uom VARCHAR(45) NOT NULL DEFAULT 'None'
+			);
+        ]]>
+	</query>
+	
+	<!-- Create table GRN DELETE REQUEST Query -->
+	<query id="create_grn_delete_req">
+        <![CDATA[
+			CREATE TABLE grn_delete_req(
+				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			    GRNNo VARCHAR(20) NOT NULL,
+			    reason VARCHAR(100) NOT NULL,
+			    FOREIGN KEY (GRNNo) REFERENCES grn(GRNNo) ON DELETE CASCADE ON UPDATE CASCADE
+			);
+        ]]>
+	</query>
+	
+	<!-- Create table ITEM DELETE REQUEST Query -->
+	<query id="create_item_delete_req">
+        <![CDATA[
+			CREATE TABLE item_delete_req(
+				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			    itemId VARCHAR(10) NOT NULL,
+			    reason VARCHAR(100) NOT NULL,
+			    FOREIGN KEY (itemId) REFERENCES item(itemId) ON DELETE CASCADE ON UPDATE CASCADE
+			)
         ]]>
 	</query>
 	
@@ -111,7 +122,7 @@
 	<!-- INSERT GRN_QTY QUERY -->
 	<query id="insert_GRN_QTY">
         <![CDATA[
-          	insert into grn_qty values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          	insert into grn_qty values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ]]>
 	</query>
 	
@@ -154,7 +165,7 @@
 	<!-- GRN QTY view -->
 	<query id="get_GRN_View">
          <![CDATA[        
-            select ItemId,Qty,UOM,SeqFeet,CBM,WLocId,DamageQty,Status,Remark from grn_qty where GRNNo = ?
+            select ItemId,Qty,SeqFeet,CBM,WLocId,DamageQty,Status,Remark from grn_qty where GRNNo = ?
         ]]>
 	</query>
 	
@@ -162,6 +173,22 @@
 	<query id="GRN_COUNT_BY_ID">
          <![CDATA[        
             select count(GRNNo) as count from grn where cusId = ?
+        ]]>
+	</query>
+	
+	<!-- Update a particular GRN by GRNNo Query -->
+	<query id="update_GRN">
+         <![CDATA[        
+			update grn as g
+			set g.VehicleNo = ? , g.ContainerNo = ? , g.TrailerNo = ?
+			where g.GRNNo = ?;
+        ]]>
+	</query>
+	
+	<!-- request delete a particular GRN -->
+	<query id="request_delete_GRN">
+         <![CDATA[        
+			insert into grn_delete_req(GRNNo,reason) values(?,?)
         ]]>
 	</query>
 	
@@ -175,7 +202,7 @@
 	<!-- INSERT ITEM QUERY -->
 	<query id="insert_ITEM">
         <![CDATA[
-          	insert into item(itemName,itemDescrption,remark) values(?, ?, ?)
+          	insert into item(itemId,itemName,itemDescription,remark) values(?, ?, ?, ?)
         ]]>
 	</query>
 	
@@ -183,6 +210,36 @@
 	<query id="GET_ITEM_NAME">
         <![CDATA[
           	select itemName from item where itemId = ?
+        ]]>
+	</query>
+	
+	<!-- GET ITEM LIST QUERY -->
+	<query id="GET_ITEM_LIST">
+        <![CDATA[
+          	select * from item
+        ]]>
+	</query>
+	
+	<!-- GET ITEM UPDATE QUERY -->
+	<query id="GET_ITEM_UPDATE">
+        <![CDATA[
+			update item as i
+			set i.itemName = ? , i.itemDescription = ? , i.remark = ?
+			where i.itemId = ?
+        ]]>
+	</query>
+	
+	<!-- GET ITEM By ID QUERY -->
+	<query id="GET_ITEM_BY_ID">
+        <![CDATA[
+			select * from item where itemId = ?
+        ]]>
+	</query>
+	
+	<!-- request delete a particular ITEM -->
+	<query id="request_delete_ITEM">
+         <![CDATA[        
+			insert into item_delete_req(itemId,reason) values(?,?)
         ]]>
 	</query>
 	

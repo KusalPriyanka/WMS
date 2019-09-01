@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<%@page import="com.wms.model.GRN_Qty"%>
-<%@page import="com.wms.model.GRN"%>
-<%@page import="com.wms.model.GRN_Show"%>
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.wms.service.GoodHandlingServiceImpl"%>
-<%@page import="com.wms.service.IGoodHandlingService"%>
 <html lang="en">
 
 <head>
@@ -15,17 +9,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>DWW Logistics</title>
+  <title>DWW</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
   <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
 </head>
 
 <body id="page-top">
@@ -71,9 +66,23 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Good Receiving(GRN)</h6>
-            <a class="collapse-item" href="goodreceive.html">Overview</a>
-            <a class="collapse-item" href="goodreceive.html">Create GRN</a>
-            <a class="collapse-item" href="itemrequest.html">Request New Item</a>
+            <a class="collapse-item" href="overviewgrn.jsp">Overview</a>
+            <a class="collapse-item" href="goodreceive_s1.jsp">Create GRN</a>
+          </div>
+        </div>
+      </li>
+      
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseItem" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-boxes"></i>
+          <span>Items</span>
+        </a>
+        <div id="collapseItem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Items</h6>
+            <a class="collapse-item" href="overviewitem.jsp">Overview</a>
+            <a class="collapse-item" href="itemrequest.jsp">Request New Item</a>
           </div>
         </div>
       </li>
@@ -103,8 +112,8 @@
         <div id="dis" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Good Dispatching(GDN)</h6>
-            <a class="collapse-item" href="goodreceive.html">Overview</a>
-            <a class="collapse-item" href="goodreceive.html">Create GDN</a>
+            <a class="collapse-item" href="overviewgrn.jsp">Overview</a>
+            <a class="collapse-item" href="dispatch.jsp">Create GDN</a>
           </div>
         </div>
       </li>
@@ -133,7 +142,6 @@
       </div>
 
     </ul>
-    <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -295,8 +303,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Kusal Perera</span>
-                <img class="img-profile rounded-circle" src="img/face.jpg">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Kusal Priyanka</span>
+                <img class="img-profile rounded-circle" src="../../img/face.jpg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -323,248 +331,3 @@
           </ul>
 
         </nav>
-        <!-- End of Topbar -->
-        
-        <%  
-        	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-        	ArrayList<GRN> GRNList = goodHandlingService.getGRNs();
-
-        %>
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-            <div class="row m-2">
-                <h1 class="h3 font-weight-bold text-primary">GRN Overview</h1>
-            </div>
-              
-        <div class="row justify-content-center m-4">
-        <div class="col">
-            
-          <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">GRN List</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>GRN No</th>
-                      <th>Customer Name</th>
-                      <th>Vehicle No</th>
-                      <th>Container No</th>
-                      <th>Trailer No</th>                   
-                      <th>Date</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tfoot>
-                    <tr>
-                      <th>GRN No</th>
-                      <th>Customer Name</th>
-                      <th>Vehicle No</th>
-                      <th>Container No</th>
-                      <th>Trailer No</th>                   
-                      <th>Date</th>
-                      <th></th>
-                      </tr>
-                  </tfoot>
-                <tbody>
-                
-                <%
-                	for(GRN GS : GRNList){
-                %>
-                
-                    <tr>
-                        <td class="grn"><%= GS.getGRNNo() %></td>
-                        <td><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
-                        <td><%= GS.getVehicleNo() %></td>
-                        <td><%= GS.getContainerNo() %></td>
-                        <td><%= GS.getTrailerNo() %></td>
-                        <td><%= GS.getDate() %></td>
-                        <td><center>
-                        <button type="button" class="btnshow btn btn-warning btn-circle"><i class="fas fa-eye"></i></button>
-                        <button type="button" class="btn btn-success btn-circle" data-toggle="modal" data-target="#update"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></button>
-                        </center></td>
-                    </tr>
-                    
-                 <%
-                	}
-                 %>   
-                    
-                </tbody>
-            </table>
-            </div>
-            </div>
-        </div>
-        </div>
-        </div>
-        <!-- /.container-fluid -->
-        
-      
-
-      </div>
-      <!-- End of Main Content -->
-
-      <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="update" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Kus_GRN_01</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                update
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            </div>
-        </div>
-        
-              <!-- Modal -->
-        <div class="modal fade bd-example-modal-lg" id="show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="showId"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                <div class="row m-0">
-                <div id="grntable"></div>
-				<table class="table table-hover" id="grn_qty">
-				  <thead>
-				    <tr class="bg-primary text-white">
-				      <th scope="col">Item Name</th>
-				      <th scope="col">QTY</th>
-				      <th scope="col">UOM</th>
-				      <th scope="col">CBM</th>
-				      <th scope="col">WLoc</th>
-				      <th scope="col">DamageQty</th>
-				      <th scope="col">Status</th>
-				      <th scope="col">Remark</th>
-				    </tr>
-				  </thead>
-				</table>			
-                </div>
-
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            </div>
-        </div>
-
-      <!-- Footer -->
-      <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
-          </div>
-        </div>
-      </footer>
-      <!-- End of Footer -->
-
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
-
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
-    
-    <script>
-    
-     $(".btnshow").click(function() {
-        var $row = $(this).closest("tr");    // Find the row
-        var $grn = $row.find(".grn").text(); // Find the text
-		
-	    $.ajax({
-	        url      : 'showGRNQty',
-	        method   : 'GET', 
-	        data     : {grn: $grn},
-	        success  : function(response){
-	        	
-	        	var grnqty = $.parseJSON(response);
-	        	$("#grn_qty td").remove();
-	        	
-	        	$(function() {
-	        		$.each(grnqty, function(i, grnQ) {
-				        var $tr = $('<tr>').append(
-					            $('<td>').text(grnQ.itemDes),
-					            $('<td>').text(grnQ.qty),
-					            $('<td>').text(grnQ.uom),
-					            $('<td>').text(grnQ.CBM),
-					            $('<td>').text(grnQ.wLocId),
-					            $('<td>').text(grnQ.damageQty),
-					            $('<td>').text(grnQ.status),
-					            $('<td>').text(grnQ.remark)
-					        ); 
-					        $('#grn_qty').append($tr);
-					        $('#showId').text(grnQ.GRNNo);
-	        		});
-	        	});
-	        	
-	        	$('#show').modal('toggle'); 
-				
-	      }
-	    });
-    }); 
-    
-    
-    </script>
-
-</body>
-
-</html>

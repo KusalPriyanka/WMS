@@ -7,7 +7,6 @@ public class GRN_Qty {
 	private int itemId;
 	private String itemDes;
 	private float qty;
-	private String uom;
 	private int seqFeet;
 	private int CBM;
 	private String wLocId;
@@ -17,14 +16,13 @@ public class GRN_Qty {
 	
 	public GRN_Qty() {}
 
-	public GRN_Qty(int id, String gRNNo, int itemId, float qty, String uom, int seqFeet, int cBM, String wLocId,
+	public GRN_Qty(int id, String gRNNo, int itemId, float qty, int seqFeet, int cBM, String wLocId,
 			float damageQty, String status, String remark) {
 		super();
 		this.id = id;
 		GRNNo = gRNNo;
 		this.itemId = itemId;
 		this.qty = qty;
-		this.uom = uom;
 		this.seqFeet = seqFeet;
 		CBM = cBM;
 		this.wLocId = wLocId;
@@ -63,14 +61,6 @@ public class GRN_Qty {
 
 	public void setQty(float qty) {
 		this.qty = qty;
-	}
-
-	public String getUom() {
-		return uom;
-	}
-
-	public void setUom(String uom) {
-		this.uom = uom;
 	}
 
 	public int getSeqFeet() {
@@ -131,7 +121,7 @@ public class GRN_Qty {
 
 	@Override
 	public String toString() {
-		return "GRN_Qty [id=" + id + ", GRNNo=" + GRNNo + ", itemDes=" + itemId + ", qty=" + qty + ", uom=" + uom
+		return "GRN_Qty [id=" + id + ", GRNNo=" + GRNNo + ", itemId=" + itemId + ", itemDes=" + itemDes + ", qty=" + qty
 				+ ", seqFeet=" + seqFeet + ", CBM=" + CBM + ", wLocId=" + wLocId + ", damageQty=" + damageQty
 				+ ", status=" + status + ", remark=" + remark + "]";
 	}

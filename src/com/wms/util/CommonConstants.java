@@ -43,6 +43,8 @@ public class CommonConstants {
 	public static final String QUERY_ID_CREATE_GRN_TABLE = "create_GRN_table";
 	public static final String QUERY_ID_CREATE_GRN_QTY_TABLE = "create_GRN_Qty_table";
 	public static final String QUERY_ID_CREATE_ITEM_TABLE = "create_item_table";
+	public static final String QUERY_ID_CREATE_GRN_DELETE_REQUEST_TABLE = "create_grn_delete_req";
+	public static final String QUERY_ID_CREATE_ITEM_DELETE_REQUEST_TABLE = "create_item_delete_req";
 	
 	/** Constant for query id of insert GRN in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN = "insert_GRN";
@@ -71,15 +73,33 @@ public class CommonConstants {
 	/** Constant for query id of get GRN QTY view in Query.xml */
 	public static final String QUERY_ID_GET_GRNQTY_VIEW = "get_GRN_View";
 	
+	/** Constant for query id of Update GRN in Query.xml */
+	public static final String QUERY_ID_UPDATE_GRN = "update_GRN";
+	
+	/** Constant for query id of DELETE req GRN in Query.xml */
+	public static final String QUERY_ID_REQUEST_DELETE_GRN = "request_delete_GRN";
+	
 	/** Constant for query id of insert Item in Query.xml */
 	public static final String QUERY_ID_INSERT_ITEM = "insert_ITEM";
 	
-	/** Constant for query id of get itemcode in Query.xml */
+	/** Constant for query id of get item code in Query.xml */
 	public static final String QUERY_ID_GET_ITEM_CODE = "get_Item_Code";
 	
 	/** Constant for query id of get Item name in Query.xml */
 	public static final String QUERY_ID_GET_ITEM_NAME = "GET_ITEM_NAME";
+	
+	/** Constant for query id of get Item List in Query.xml */
+	public static final String QUERY_ID_GET_ITEM_LIST = "GET_ITEM_LIST";
+	
+	/** Constant for query id of Update Item in Query.xml */
+	public static final String QUERY_ID_UPDATE_ITEM = "GET_ITEM_UPDATE";
 
+	/** Constant for query id of Update Item in Query.xml */
+	public static final String QUERY_ID_GET_ITEM_BY_ID = "GET_ITEM_BY_ID";
+	
+	/** Constant for query id of DELETE req Item in Query.xml */
+	public static final String QUERY_ID_REQUEST_DELETE_ITEM = "request_delete_ITEM";
+	
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;
 	

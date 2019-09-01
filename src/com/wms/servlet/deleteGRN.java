@@ -7,27 +7,29 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.wms.model.Item;
 import com.wms.service.GoodHandlingServiceImpl;
 import com.wms.service.IGoodHandlingService;
 
-
-@WebServlet("/InsertItem")
-public class InsertItem extends HttpServlet {
+@WebServlet("/deleteGRN")
+public class deleteGRN extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+    public deleteGRN() {
+        super();
+       
+    }
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Item item = new Item();
-		item.setItemId(request.getParameter("itemCode"));
-		item.setItemName(request.getParameter("itemName"));
-		item.setItemDes(request.getParameter("itemDes"));
-		item.setRemark(request.getParameter("itemRemark"));
+		String step = request.getParameter("step");
 		
-		IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-		goodHandlingService.addItem(item);
-		
-		response.sendRedirect("views/GoodHandling/overviewitem.jsp");
+		if(step.equals("req")) {
+			
+			IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
+			goodHandlingService.requestDeleteGRN(request.getParameter("GRNNo"), request.getParameter("reason"));
+			
+			response.sendRedirect("views/GoodHandling/overviewgrn.jsp");
+		}
 		
 	}
 

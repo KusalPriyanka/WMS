@@ -4,14 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>DWW</title>
 </head>
 <body>
+
+	<jsp:include page="header.jsp"></jsp:include>
 	
-	<%--  <jsp:include page="\WEB-INF\views\Manager\index.jsp"></jsp:include> --%>
-	<%-- <jsp:include page="\WEB-INF\views\GoodHandling\overviewgrn.jsp"></jsp:include> --%>
+		<h1>Inventory Manager Account</h1>
 	
-	<a href = "views/GoodHandling/overviewgrn.jsp">Click</a>
-	
+	<jsp:include page="footer.jsp"></jsp:include>
+
+
 </body>
 </html>

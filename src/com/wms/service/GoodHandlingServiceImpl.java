@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,8 +54,10 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_CUSTOMER_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_TABLE));
-			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_QTY_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_ITEM_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_QTY_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_DELETE_REQUEST_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_ITEM_DELETE_REQUEST_TABLE));
 			
 
 		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
@@ -135,13 +136,12 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, grn_Qty.getGRNNo());
 			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_THREE, grn_Qty.getItemId());
 			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_FOUR, grn_Qty.getQty());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_FIVE, grn_Qty.getUom());
-			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_SIX, grn_Qty.getSeqFeet());
-			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_SEVEN, grn_Qty.getCBM());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_EIGHT, grn_Qty.getwLocId());
-			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_NINE, grn_Qty.getDamageQty());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TEN, grn_Qty.getStatus());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ELEVEN, grn_Qty.getRemark());
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_FIVE, grn_Qty.getSeqFeet());
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_SIX, grn_Qty.getCBM());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_SEVEN, grn_Qty.getwLocId());
+			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_EIGHT, grn_Qty.getDamageQty());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_NINE, grn_Qty.getStatus());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TEN, grn_Qty.getRemark());
 			
 			preparedStatement.execute();
 			connection.commit();
@@ -249,9 +249,10 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_INSERT_ITEM));
 			connection.setAutoCommit(false);
 			
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, item.getItemName());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, item.getItemDes());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, item.getRemark());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, item.getItemId());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, item.getItemName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, item.getItemDes());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_FOUR, item.getRemark());
 			
 			preparedStatement.execute();
 			connection.commit();
@@ -376,13 +377,12 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 				grn_Qty.setGRNNo(GRNNo);
 				grn_Qty.setItemId(resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE));
 				grn_Qty.setQty(resultSet.getFloat(CommonConstants.COLUMN_INDEX_TWO));
-				grn_Qty.setUom(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
-				grn_Qty.setSeqFeet(resultSet.getInt(CommonConstants.COLUMN_INDEX_FOUR));
-				grn_Qty.setCBM(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE));
-				grn_Qty.setwLocId(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
-				grn_Qty.setDamageQty(resultSet.getFloat(CommonConstants.COLUMN_INDEX_SEVEN));
-				grn_Qty.setStatus(resultSet.getString(CommonConstants.COLUMN_INDEX_EIGHT));
-				grn_Qty.setRemark(resultSet.getString(CommonConstants.COLUMN_INDEX_NINE));
+				grn_Qty.setSeqFeet(resultSet.getInt(CommonConstants.COLUMN_INDEX_THREE));
+				grn_Qty.setCBM(resultSet.getInt(CommonConstants.COLUMN_INDEX_FOUR));
+				grn_Qty.setwLocId(resultSet.getString(CommonConstants.COLUMN_INDEX_FIVE));
+				grn_Qty.setDamageQty(resultSet.getFloat(CommonConstants.COLUMN_INDEX_SIX));
+				grn_Qty.setStatus(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+				grn_Qty.setRemark(resultSet.getString(CommonConstants.COLUMN_INDEX_EIGHT));
 				grnlist.add(grn_Qty);
 				
 			}
@@ -570,4 +570,286 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		return CusRef;	
 		
 	}
+
+	@Override
+	public ArrayList<Item> getReqItemList() {
+		
+		ArrayList<Item> itemList = getItemListAction(0);
+		
+		return itemList;
+	}
+	
+	@Override
+	public ArrayList<Item> getItemList() {
+		
+		ArrayList<Item> itemList = getItemListAction(1);
+		
+		return itemList;
+	}
+	
+	private ArrayList<Item> getItemListAction(int status) {
+		
+		ArrayList<Item> itemList = new ArrayList<Item>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_ITEM_LIST));
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			if(status == 0) {
+				
+				while(resultSet.next()) {
+					
+					if(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE) == -1 && resultSet.getFloat(CommonConstants.COLUMN_INDEX_SIX) == -1) {
+					
+						Item item = new Item();
+						item.setItemId(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+						item.setItemName(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+						item.setItemDes(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+						item.setRemark(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+						item.setPaymentMethod(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE));
+						item.setPrice(resultSet.getFloat(CommonConstants.COLUMN_INDEX_SIX));
+						item.setUom(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+						itemList.add(item);
+					
+					}
+					
+				}				
+			}
+
+			else if(status == 1) {
+				
+				while(resultSet.next()) {
+					
+					if(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE) != -1 && resultSet.getFloat(CommonConstants.COLUMN_INDEX_SIX) != -1) {
+					
+						Item item = new Item();
+						item.setItemId(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+						item.setItemName(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+						item.setItemDes(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+						item.setRemark(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+						item.setPaymentMethod(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE));
+						item.setPrice(resultSet.getFloat(CommonConstants.COLUMN_INDEX_SIX));
+						item.setUom(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+						itemList.add(item);
+					
+					}
+					
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return itemList;
+	}
+
+
+	@Override
+	public void updateGRN(GRN grn) {
+		
+		if(grn != null) {
+			
+			try {
+				
+				connection = DBConnectionUtil.getDBConnection();
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_UPDATE_GRN));
+				
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, grn.getVehicleNo());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, grn.getContainerNo());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, grn.getTrailerNo());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_FOUR, grn.getGRNNo());
+				
+				preparedStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				log.log(Level.SEVERE, e.getMessage());
+			} finally {
+				
+				try {
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					log.log(Level.SEVERE, e.getMessage());
+				}
+			}
+			
+		}
+		
+	}
+
+
+	@Override
+	public void requestDeleteGRN(String GRNNo, String reason) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_GRN));
+			connection.setAutoCommit(false);
+			
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GRNNo);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, reason);
+			
+			preparedStatement.execute();
+			connection.commit();
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+	}
+
+
+	@Override
+	public void updateItem(Item item) {
+		
+		if(item != null) {
+			
+			try {
+				
+				connection = DBConnectionUtil.getDBConnection();
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_UPDATE_ITEM));
+				
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, item.getItemName());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, item.getItemDes());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, item.getRemark());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_FOUR, item.getItemId());
+				
+				preparedStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				log.log(Level.SEVERE, e.getMessage());
+			} finally {
+				
+				try {
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					log.log(Level.SEVERE, e.getMessage());
+				}
+			}
+			
+		}
+		
+	}
+
+
+	@Override
+	public Item getItemById(String Id) {
+		
+		Item item = new Item();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_ITEM_BY_ID));
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, Id);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				item.setItemId(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+				item.setItemName(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				item.setItemDes(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+				item.setRemark(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+				item.setPaymentMethod(resultSet.getInt(CommonConstants.COLUMN_INDEX_FIVE));
+				item.setPrice(resultSet.getFloat(CommonConstants.COLUMN_INDEX_SIX));
+				item.setUom(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+				
+			}
+			
+		} catch(Exception e){
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		
+		return item;
+	}
+
+
+	@Override
+	public void requestDeleteItem(String itemId, String reason) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_ITEM));
+			connection.setAutoCommit(false);
+			
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, itemId);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, reason);
+			
+			preparedStatement.execute();
+			connection.commit();
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+	}
+
+
 }

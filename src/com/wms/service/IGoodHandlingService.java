@@ -27,10 +27,24 @@ public interface IGoodHandlingService {
 	
 	public String generateGRNNo(String cusId);
 	
+	public void updateGRN(GRN grn);
+	
+	public void requestDeleteGRN(String GRNNo,String reason);
+	
 	//Item
 	public int getItemCode();
 	
 	public void addItem(Item item);
 	
 	public String getItemName(int itemId);
+	
+	public ArrayList<Item> getReqItemList();
+	
+	public ArrayList<Item> getItemList();
+	
+	public Item getItemById(String Id);
+	
+	public void updateItem(Item item);
+	
+	public void requestDeleteItem(String itemId,String reason);
 }
