@@ -69,6 +69,41 @@
         ]]>
 	</query>
 	
+	<!-- Create table gdn Query -->
+	<query id="create_gdn_table">
+        <![CDATA[
+			CREATE TABLE gdn(
+				GDNNo VARCHAR(20) NOT NULL PRIMARY KEY,
+			    VehicleNo VARCHAR(20) NOT NULL,
+			    ContainerNo VARCHAR(20) NOT NULL,
+			    Date DATE NOT NULL,
+			    STime VARCHAR(20) NOT NULL,
+			    ETime VARCHAR(20) NOT NULL,
+			    CusId VARCHAR(10) NOT NULL,
+			    FOREIGN KEY (CusId) REFERENCES customer(CustomerId) ON DELETE CASCADE ON UPDATE CASCADE
+			);
+        ]]>
+	</query>
+	
+	<!-- Create table gdn qty Query -->
+	<query id="create_gdn_qty_table">
+        <![CDATA[
+			CREATE TABLE gdn_qty(
+				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			    GDNNo VARCHAR(20) NOT NULL,
+			    GRNNo VARCHAR(20) NOT NULL,
+			    itemId VARCHAR(10) NOT NULL,
+			    Qty FLOAT NOT NULL,
+			    SeqFeet INT NOT NULL,
+			    CBM INT NOT NULL,
+			    Remark VARCHAR(100) NOT NULL,
+			    FOREIGN KEY (GDNNo) REFERENCES gdn(GDNNo) ON DELETE CASCADE ON UPDATE CASCADE,
+			    FOREIGN KEY (GRNNo) REFERENCES grn(GRNNo) ON DELETE CASCADE ON UPDATE CASCADE,
+			    FOREIGN KEY (itemId) REFERENCES item(itemId) ON DELETE CASCADE ON UPDATE CASCADE
+			);
+        ]]>
+	</query>
+	
 	<!-- Create table GRN DELETE REQUEST Query -->
 	<query id="create_grn_delete_req">
         <![CDATA[
@@ -192,6 +227,13 @@
         ]]>
 	</query>
 	
+	<!-- request delete a particular GRN -->
+	<query id="get_GRN_By_cusId">
+         <![CDATA[        
+			select * from grn where CusId = ?
+        ]]>
+	</query>
+	
 	<!-- INSERT GET ITEM CODE QUERY -->
 	<query id="get_Item_Code">
         <![CDATA[
@@ -240,6 +282,20 @@
 	<query id="request_delete_ITEM">
          <![CDATA[        
 			insert into item_delete_req(itemId,reason) values(?,?)
+        ]]>
+	</query>
+	
+	<!-- GET GDN count -->
+	<query id="GDN_COUNT_BY_ID">
+         <![CDATA[        
+            select count(GDNNo) as count from gdn where cusId = ?
+        ]]>
+	</query>
+	
+	<!-- INSERT GDN -->
+	<query id="insert_GDN">
+         <![CDATA[        
+            insert into gdn values(?, ?, ?, ?, ?, ?, ?)
         ]]>
 	</query>
 	
