@@ -112,7 +112,7 @@
         <div id="dis" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Good Dispatching(GDN)</h6>
-            <a class="collapse-item" href="overviewgrn.jsp">Overview</a>
+            <a class="collapse-item" href="overviewgdn.jsp">Overview</a>
             <a class="collapse-item" href="dispatch.jsp">Create GDN</a>
           </div>
         </div>

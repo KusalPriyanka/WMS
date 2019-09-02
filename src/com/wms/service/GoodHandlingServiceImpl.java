@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.wms.model.Customer;
+import com.wms.model.GDN;
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
 import com.wms.model.Item;
@@ -56,6 +57,8 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_ITEM_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_QTY_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GDN_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GDN_QTY_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_DELETE_REQUEST_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_ITEM_DELETE_REQUEST_TABLE));
 			
@@ -134,7 +137,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			
 			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_ONE, grn_Qty.getId());
 			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, grn_Qty.getGRNNo());
-			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_THREE, grn_Qty.getItemId());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, grn_Qty.getItemId());
 			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_FOUR, grn_Qty.getQty());
 			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_FIVE, grn_Qty.getSeqFeet());
 			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_SIX, grn_Qty.getCBM());
@@ -166,6 +169,54 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			
 	}
 
+	@Override
+	public ArrayList<GRN> getGRNByCusID(String cusId) {
+		
+		ArrayList<GRN> grnlist = new ArrayList<GRN>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GRN_BY_CUSID));
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, cusId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				GRN grn = new GRN();
+				grn.setGRNNo(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+				grn.setVehicleNo(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				grn.setContainerNo(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+				grn.setTrailerNo(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+				grn.setDate(resultSet.getString(CommonConstants.COLUMN_INDEX_FIVE));
+				grn.setsTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
+				grn.seteTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+				grn.setCusId(resultSet.getString(CommonConstants.COLUMN_INDEX_EIGHT));
+				grnlist.add(grn);	
+			}
+			
+		} catch (Exception e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return grnlist;
+	}
 	
 	@Override
 	public GRN getGRNById(String GRNNo) {
@@ -375,7 +426,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 				
 				GRN_Qty grn_Qty = new GRN_Qty();
 				grn_Qty.setGRNNo(GRNNo);
-				grn_Qty.setItemId(resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE));
+				grn_Qty.setItemId(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
 				grn_Qty.setQty(resultSet.getFloat(CommonConstants.COLUMN_INDEX_TWO));
 				grn_Qty.setSeqFeet(resultSet.getInt(CommonConstants.COLUMN_INDEX_THREE));
 				grn_Qty.setCBM(resultSet.getInt(CommonConstants.COLUMN_INDEX_FOUR));
@@ -408,7 +459,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 
 	@Override
-	public String getItemName(int itemId) {
+	public String getItemName(String itemId) {
 		
 		String name = null;
 		
@@ -417,7 +468,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			connection = DBConnectionUtil.getDBConnection();
 			
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_ITEM_NAME));
-			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_ONE, itemId);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, itemId);
 			
 			ResultSet resultSet = preparedStatement.executeQuery();
 			
@@ -812,8 +863,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 				log.log(Level.SEVERE, e.getMessage());
 			}
 		}
-		
-		
+			
 		return item;
 	}
 
@@ -851,5 +901,92 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 	}
 
+
+	@Override
+	public String generateGDNNo(String cusId) {
+		
+		String GDNNo = "DWW/" + getCustomerRef(cusId) + "/";
+		int count = 0;
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GDN_COUNT_BY_ID));
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, cusId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+					
+				count = resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE);
+
+			}
+			
+			GDNNo += String.format("%02d", ++count);
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		
+		return GDNNo;
+		
+	}
+
+
+	@Override
+	public void addGDN(GDN gdn) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_INSERT_GDN));
+			connection.setAutoCommit(false);
+			
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, gdn.getGDNNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, gdn.getVehicleNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, gdn.getContainerNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_FOUR, gdn.getDate());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_FIVE, gdn.getsTime());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_SIX, gdn.geteTime());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_SEVEN, gdn.getCusId());
+			
+			preparedStatement.execute();
+			connection.commit();
+			
+			
+		} catch (Exception e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+			
+		}
+		
+	}
 
 }

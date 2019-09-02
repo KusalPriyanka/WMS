@@ -31,7 +31,7 @@ public class InsertGRN extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession httpSession = request.getSession();
-		IGoodHandlingService iGoodHandlingService = new GoodHandlingServiceImpl();;
+		IGoodHandlingService iGoodHandlingService = new GoodHandlingServiceImpl();
 		String step = request.getParameter("step");
 		GRN GRN = new GRN();
 		GRN_Qty grn_Qty = new GRN_Qty();
@@ -61,7 +61,7 @@ public class InsertGRN extends HttpServlet {
 		else if(step.equals("2")) {			
 			
 			grn_Qty.setGRNNo(request.getParameter("GRNNo"));
-			grn_Qty.setItemId(Integer.parseInt(request.getParameter("itemId")));
+			grn_Qty.setItemId(request.getParameter("itemId"));
 			grn_Qty.setQty(Float.parseFloat(request.getParameter("qty")));
 			grn_Qty.setSeqFeet(Integer.parseInt(request.getParameter("sf")));
 			grn_Qty.setCBM(Integer.parseInt(request.getParameter("cbm")));

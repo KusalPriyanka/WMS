@@ -4,12 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.wms.model.Customer;
+import com.wms.model.GDN;
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
 import com.wms.model.Item;
 
 public interface IGoodHandlingService {
-
+	
+	//Common
+	public String getCustomerName(String cusID);
+	
+	public ArrayList<Customer> customerList();
+	
 	//GRN
 	public void addGRN(GRN grn);
 	
@@ -19,24 +25,28 @@ public interface IGoodHandlingService {
 	
 	public ArrayList<GRN> getGRNs();
 	
-	public String getCustomerName(String cusID);
-	
 	public ArrayList<GRN_Qty> getGRNQTYView(String GRNNo);
 	
-	public ArrayList<Customer> customerList();
-	
+	public ArrayList<GRN> getGRNByCusID(String cusId);
+		
 	public String generateGRNNo(String cusId);
 	
 	public void updateGRN(GRN grn);
 	
 	public void requestDeleteGRN(String GRNNo,String reason);
 	
+	//GDN
+	
+	public String generateGDNNo(String cusId);
+	
+	public void addGDN(GDN gdn);
+	
 	//Item
 	public int getItemCode();
 	
 	public void addItem(Item item);
 	
-	public String getItemName(int itemId);
+	public String getItemName(String itemId);
 	
 	public ArrayList<Item> getReqItemList();
 	

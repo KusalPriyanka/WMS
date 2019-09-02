@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">Select Customer :</label>
                         <select class="form-control" id="customerId" name="cusId" required>
-                        <option disabled selected value> -- Select Customer -- </option>
+                        <option disabled selected> -- Select Customer -- </option>
                         <%
                         	for(Customer list : cusList){
                         %>

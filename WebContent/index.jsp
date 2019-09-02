@@ -12,6 +12,7 @@
 	<%-- <jsp:include page="\WEB-INF\views\GoodHandling\overviewgrn.jsp"></jsp:include> --%>
 	
 	<a href = "views/GoodHandling/overviewgrn.jsp">Click</a>
+	<a href = "views/GoodHandling/dispatchdetails.jsp">DClick</a>
 	
 </body>
 </html>

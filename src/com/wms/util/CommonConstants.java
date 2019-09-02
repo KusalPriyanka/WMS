@@ -45,6 +45,8 @@ public class CommonConstants {
 	public static final String QUERY_ID_CREATE_ITEM_TABLE = "create_item_table";
 	public static final String QUERY_ID_CREATE_GRN_DELETE_REQUEST_TABLE = "create_grn_delete_req";
 	public static final String QUERY_ID_CREATE_ITEM_DELETE_REQUEST_TABLE = "create_item_delete_req";
+	public static final String QUERY_ID_CREATE_GDN_TABLE = "create_gdn_table";
+	public static final String QUERY_ID_CREATE_GDN_QTY_TABLE = "create_gdn_qty_table";
 	
 	/** Constant for query id of insert GRN in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN = "insert_GRN";
@@ -73,6 +75,9 @@ public class CommonConstants {
 	/** Constant for query id of get GRN QTY view in Query.xml */
 	public static final String QUERY_ID_GET_GRNQTY_VIEW = "get_GRN_View";
 	
+	/** Constant for query id of get GRN By cusid view in Query.xml */
+	public static final String QUERY_ID_GET_GRN_BY_CUSID = "get_GRN_By_cusId";
+	
 	/** Constant for query id of Update GRN in Query.xml */
 	public static final String QUERY_ID_UPDATE_GRN = "update_GRN";
 	
@@ -99,6 +104,12 @@ public class CommonConstants {
 	
 	/** Constant for query id of DELETE req Item in Query.xml */
 	public static final String QUERY_ID_REQUEST_DELETE_ITEM = "request_delete_ITEM";
+	
+	/** Constant for query id of get GRN COUNT in Query.xml */
+	public static final String QUERY_ID_GET_GDN_COUNT_BY_ID = "GDN_COUNT_BY_ID";
+	
+	/** Constant for query id of insert GRN in Query.xml */
+	public static final String QUERY_ID_INSERT_GDN = "insert_GDN";
 	
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

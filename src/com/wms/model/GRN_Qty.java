@@ -4,7 +4,7 @@ public class GRN_Qty {
 	
 	private int id;
 	private String GRNNo;
-	private int itemId;
+	private String itemId;
 	private String itemDes;
 	private float qty;
 	private int seqFeet;
@@ -16,7 +16,7 @@ public class GRN_Qty {
 	
 	public GRN_Qty() {}
 
-	public GRN_Qty(int id, String gRNNo, int itemId, float qty, int seqFeet, int cBM, String wLocId,
+	public GRN_Qty(int id, String gRNNo, String itemId, float qty, int seqFeet, int cBM, String wLocId,
 			float damageQty, String status, String remark) {
 		super();
 		this.id = id;
@@ -47,11 +47,11 @@ public class GRN_Qty {
 		GRNNo = gRNNo;
 	}
 
-	public int getItemId() {
+	public String getItemId() {
 		return itemId;
 	}
 
-	public void setItemId(int itemId) {
+	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
 
