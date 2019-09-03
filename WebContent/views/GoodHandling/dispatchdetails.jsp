@@ -14,8 +14,8 @@
  				response.sendRedirect("dispatch.jsp");
  			}
  			else{
- 				GDN GDN = (GDN) session.getAttribute("GDN");
- 			
+ 				GDN GDN = (GDN) session.getAttribute("GDN"); 				
+ 				
  			IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
  			ArrayList<GRN> grnList = goodHandlingService.getGRNByCusID(GDN.getCusId());
 
@@ -40,7 +40,7 @@
                         
                           <option value="<%= G.getGRNNo() %>"><%= G.getGRNNo() %></option>
 
-						<% } }%>
+						<% } %>
 
                         </select>
                     </div>
@@ -93,7 +93,7 @@
             <div class="col-md-4">
               <div class="card mt-5">
                 <div class="card-body">
-                  <h5 class="card-title">Customer Name : <span class="card-title" id="cusnamepre"> </span> </h5>
+                  <h5 class="card-title">Customer Name : <span class="card-title" id="cusnamepre"> <%= goodHandlingService.getCustomerName(GDN.getCusId()) %> </span> </h5>
                   <h6 class="card-subtitle mb-2 text-muted">GRN No : <span class="card-subtitle" id="grnnumpre"> </span></h6>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -108,7 +108,7 @@
           </div>
           
         </div>
-       
+       <% } %>
       <!-- End of Main Content -->
       
       <script>      

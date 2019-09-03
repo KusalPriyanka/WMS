@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <%@page import="com.wms.model.GRN_Qty"%>
 <%@page import="com.wms.model.GRN"%>
-<%@page import="com.wms.model.GRN_Show"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.wms.service.GoodHandlingServiceImpl"%>
 <%@page import="com.wms.service.IGoodHandlingService"%>
