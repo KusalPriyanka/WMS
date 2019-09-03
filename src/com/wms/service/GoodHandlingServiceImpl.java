@@ -989,4 +989,45 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 	}
 
+
+	@Override
+	public GRN_Qty getGRNQtyByGRNNoAndItemId(String GRNNo, String ItemId) {
+		
+		GRN_Qty grn_Qty = new GRN_Qty();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GRNQTY_GRNNOANDITEMID));
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GRNNo);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, ItemId);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				grn_Qty.setQty(resultSet.getFloat(CommonConstants.COLUMN_INDEX_ONE));
+				grn_Qty.setSeqFeet(resultSet.getInt(CommonConstants.COLUMN_INDEX_TWO));
+				grn_Qty.setCBM(resultSet.getInt(CommonConstants.COLUMN_INDEX_THREE));
+				grn_Qty.setwLocId(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+				grn_Qty.setRemark(resultSet.getString(CommonConstants.COLUMN_INDEX_FIVE));
+			}
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}	
+		}
+		return grn_Qty;
+	}
 }

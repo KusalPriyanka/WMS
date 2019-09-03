@@ -84,6 +84,9 @@ public class CommonConstants {
 	/** Constant for query id of DELETE req GRN in Query.xml */
 	public static final String QUERY_ID_REQUEST_DELETE_GRN = "request_delete_GRN";
 	
+	/** Constant for query id of get GRN in Query.xml */
+	public static final String QUERY_ID_GET_GRNQTY_GRNNOANDITEMID = "get_GRN_By_ItemIdAndCusId";
+	
 	/** Constant for query id of insert Item in Query.xml */
 	public static final String QUERY_ID_INSERT_ITEM = "insert_ITEM";
 	

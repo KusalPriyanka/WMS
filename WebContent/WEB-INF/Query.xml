@@ -227,10 +227,17 @@
         ]]>
 	</query>
 	
-	<!-- request delete a particular GRN -->
+	<!-- request get a particular GRN -->
 	<query id="get_GRN_By_cusId">
          <![CDATA[        
 			select * from grn where CusId = ?
+        ]]>
+	</query>
+	
+	<!-- request get a particular GRN -->
+	<query id="get_GRN_By_ItemIdAndCusId">
+         <![CDATA[        
+			select Qty,SeqFeet,CBM,WLocId,Remark from grn_qty where GRNNo = ? and ItemId = ?
         ]]>
 	</query>
 	

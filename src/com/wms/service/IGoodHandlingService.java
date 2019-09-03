@@ -25,6 +25,8 @@ public interface IGoodHandlingService {
 	
 	public ArrayList<GRN> getGRNs();
 	
+	public GRN_Qty getGRNQtyByGRNNoAndItemId(String GRNNo, String ItemId);
+	
 	public ArrayList<GRN_Qty> getGRNQTYView(String GRNNo);
 	
 	public ArrayList<GRN> getGRNByCusID(String cusId);

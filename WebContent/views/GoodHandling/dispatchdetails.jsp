@@ -97,11 +97,11 @@
                   <h6 class="card-subtitle mb-2 text-muted">GRN No : <span class="card-subtitle" id="grnnumpre"> </span></h6>
                 </div>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Quantity</li>
-                  <li class="list-group-item">Unit Of Measurement</li>
-                  <li class="list-group-item">Square Feet</li>
-                  <li class="list-group-item">CBM</li>
-                  <li class="list-group-item">Remark</li>
+                  <li class="list-group-item">Quantity : <span class="card-title" id="qtypre"></span></li> 
+                  <li class="list-group-item">Square Feet : <span class="card-title" id="sfpre"></span></li>
+                  <li class="list-group-item">CBM : <span class="card-title" id="cbmpre"></span></li>
+                  <li class="list-group-item">WLoc : <span class="card-title" id="wlocpre"></span></li>
+                  <li class="list-group-item">Remark : <span class="card-title" id="remarkpre"></span></li>
                 </ul>
               </div>
             </div>  
@@ -111,11 +111,13 @@
        <% } %>
       <!-- End of Main Content -->
       
-      <script>      
+      <script>    
+      
+      var GRNNo = "";
       
       $("#grnno").on("change", function(event) { 
     	  
-    	  var GRNNo = $('#grnno').val(); 
+    	  GRNNo = $('#grnno').val(); 
     	  var CusName = $('#cusName').val();    	 
     	  
     	    $.ajax({
@@ -140,10 +142,29 @@
     	        	
     	      }
     	    });
-    	    
-    	    
-
       });
+      
+       $("#item").on("change", function(event) { 
+    	  
+    	  var item = $('#item').val();  
+
+     	    $.ajax({
+    	        url      : 'http://localhost:8080/Warehouse_Managment_System/InsertGDNValidation?action=3',
+    	        method   : 'GET', 
+    	        data     : {GRNNo: GRNNo, item:item},
+    	        success  : function(response){ 	
+    	        	
+    	        	var res = JSON.parse(response);
+    	        	
+    	        	$('#qtypre').text(res.qty);
+    	        	$('#sfpre').text(res.qty);
+    	        	$('#cbmpre').text(res.qty);
+    	        	$('#wlocpre').text(res.qty);
+    	        	$('#remarkpre').text(res.qty);
+    	        	
+    	      }
+    	    });
+      }); 
       
       </script>
 

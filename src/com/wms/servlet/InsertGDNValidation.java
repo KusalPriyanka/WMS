@@ -59,6 +59,16 @@ public class InsertGDNValidation extends HttpServlet {
 			out.close(); 
 		}
 		
+		else if(action.equals("3")) {
+			
+			GRN_Qty grn_Qty = goodHandlingService.getGRNQtyByGRNNoAndItemId(request.getParameter("GRNNo"), request.getParameter("item"));
+			
+			PrintWriter out = response.getWriter();
+			out.print(gson.toJson(grn_Qty));
+			out.flush();
+			out.close(); 
+		}
+		
 	}
 
 
