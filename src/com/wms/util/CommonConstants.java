@@ -111,8 +111,17 @@ public class CommonConstants {
 	/** Constant for query id of get GRN COUNT in Query.xml */
 	public static final String QUERY_ID_GET_GDN_COUNT_BY_ID = "GDN_COUNT_BY_ID";
 	
-	/** Constant for query id of insert GRN in Query.xml */
+	/** Constant for query id of insert GDN in Query.xml */
 	public static final String QUERY_ID_INSERT_GDN = "insert_GDN";
+	
+	/** Constant for query id of insert GDN in Query.xml */
+	public static final String QUERY_ID_INSERT_GDN_QTY = "insert_GDN_QTY";
+	
+	/** Constant for query id of get all GDN in Query.xml */
+	public static final String QUERY_ID_ALL_GDN = "all_GDNS";
+	
+	/** Constant for query id of get GDN in Query.xml */
+	public static final String QUERY_ID_GET_GDNQTY_BY_GDNNO = "get_GDNQTY_BY_GDNNO";
 	
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

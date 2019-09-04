@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<%@page import="com.wms.model.GRN_Qty"%>
-<%@page import="com.wms.model.GRN"%>
+<%@page import="com.wms.model.GDN_Qty"%>
+<%@page import="com.wms.model.GDN"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.wms.service.GoodHandlingServiceImpl"%>
 <%@page import="com.wms.service.IGoodHandlingService"%>
@@ -9,7 +9,7 @@
        
         <%  
         	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-        	ArrayList<GRN> GRNList = goodHandlingService.getGRNs();
+        	ArrayList<GDN> GDNList = goodHandlingService.getGDNs();
 
         %>
 
@@ -17,13 +17,13 @@
         <div class="container-fluid">
 
             <div class="row m-2">
-                <h1 class="h3 font-weight-bold text-primary">GRN Overview</h1>
+                <h1 class="h3 font-weight-bold text-primary">GDN Overview</h1>
             </div>
             
             <div class="row justify-content-center">
-            <a href="goodreceive_s1.jsp">
+            <a href="dispatch.jsp">
             <button type="button" class="btn btn-outline-primary btn-lg">
-			    <b>Add New GRN</b>
+			    <b>Add New GDN</b>
 			</button>
 			</a>
             </div>            
@@ -34,29 +34,27 @@
           <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">GRN List</h6>
+              <h6 class="m-0 font-weight-bold text-primary">GDN List</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>GRN No</th>
+                      <th>GDN No</th>
                       <th>Customer Name</th>
                       <th>Vehicle No</th>
-                      <th>Container No</th>
-                      <th>Trailer No</th>                   
+                      <th>Container No</th>               
                       <th>Date</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tfoot>
                     <tr>
-                      <th>GRN No</th>
+                      <th>GDN No</th>
                       <th>Customer Name</th>
                       <th>Vehicle No</th>
-                      <th>Container No</th>
-                      <th>Trailer No</th>                   
+                      <th>Container No</th>             
                       <th>Date</th>
                       <th></th>
                       </tr>
@@ -64,15 +62,14 @@
                 <tbody>
                 
                 <%
-                	for(GRN GS : GRNList){
+                	for(GDN GS : GDNList){
                 %>
                 
                     <tr>
-                        <td class="grn"><%= GS.getGRNNo() %></td>
+                        <td class="gdn"><%= GS.getGDNNo() %></td>
                         <td><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
                         <td><%= GS.getVehicleNo() %></td>
                         <td><%= GS.getContainerNo() %></td>
-                        <td><%= GS.getTrailerNo() %></td>
                         <td><%= GS.getDate() %></td>
                         <td><center>
                         <button type="button" class="btnshow btn btn-warning btn-circle"><i class="fas fa-eye"></i></button>
@@ -130,14 +127,6 @@
                           </div>
                       </div>
                       <div class="form-group">
-                          <div class="form-row">
-                              <div class="col">
-                                <label for="trailerNo">Enter Trailer Number :</label>
-                                <input type="text" class="form-control form-control-sm" id="updatetrailerNo" placeholder="Enter Trailer Number" name="trailerNo">
-                              </div>
-                      </div>
-                      </div>
-                      <div class="form-group">
                           <div class="form-row float-right">
                  		<button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Close</button>
                 		<button type="submit" class="btn btn-success float-right">Save Changes</button>  
@@ -165,15 +154,14 @@
                 <div class="modal-body">
                 <div class="row m-0">
                 <div id="grntable"></div>
-				<table class="table table-hover" id="grn_qty">
+				<table class="table table-hover" id="gdn_qty">
 				  <thead>
 				    <tr class="bg-primary text-white">
+				      <th scope="col">GRNNo</th>
 				      <th scope="col">Item Name</th>
-				      <th scope="col">QTY</th>
+				      <th scope="col">QTY</th>				      
+				      <th scope="col">SeqFeet</th>				      
 				      <th scope="col">CBM</th>
-				      <th scope="col">WLoc</th>
-				      <th scope="col">DamageQty</th>
-				      <th scope="col">Status</th>
 				      <th scope="col">Remark</th>
 				    </tr>
 				  </thead>
@@ -254,30 +242,29 @@
     
      $(".btnshow").click(function() {
         var $row = $(this).closest("tr");    // Find the row
-        var $grn = $row.find(".grn").text(); // Find the text in row
-		
-	    $.ajax({
-	        url      : 'http://localhost:8080/Warehouse_Managment_System/showGRNQty?step=1',
+        var $gdn = $row.find(".gdn").text(); // Find the text in row
+
+ 	    $.ajax({
+	        url      : 'http://localhost:8080/Warehouse_Managment_System/showGDNQty?step=1',
 	        method   : 'GET', 
-	        data     : {grn: $grn},
+	        data     : {gdn: $gdn},
 	        success  : function(response){
 	        	
-	        	var grnqty = $.parseJSON(response);
-	        	$("#grn_qty td").remove();
+	        	var gdnqty = $.parseJSON(response);
+	        	$("#gdn_qty td").remove();
 	        	
 	        	$(function() {
-	        		$.each(grnqty, function(i, grnQ) {
+	        		$.each(gdnqty, function(i, gdnQ) {
 				        var $tr = $('<tr>').append(
-					            $('<td>').text(grnQ.itemDes),
-					            $('<td>').text(grnQ.qty),
-					            $('<td>').text(grnQ.CBM),
-					            $('<td>').text(grnQ.wLocId),
-					            $('<td>').text(grnQ.damageQty),
-					            $('<td>').text(grnQ.status),
-					            $('<td>').text(grnQ.remark)
+					            $('<td>').text(gdnQ.GRNNo),
+					            $('<td>').text(gdnQ.itemdes),
+					            $('<td>').text(gdnQ.qty),
+					            $('<td>').text(gdnQ.SeqFeet),
+					            $('<td>').text(gdnQ.CBM),
+					            $('<td>').text(gdnQ.remark)
 					        ); 
-					        $('#grn_qty').append($tr);
-					        $('#showId').text(grnQ.GRNNo);
+					        $('#gdn_qty').append($tr);
+					        $('#showId').text(gdnQ.GDNNo);
 	        		});
 	        	});
 	        	

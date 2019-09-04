@@ -306,4 +306,25 @@
         ]]>
 	</query>
 	
+	<!-- INSERT GDN QTY -->
+	<query id="insert_GDN_QTY">
+         <![CDATA[        
+            insert into gdn_qty(GDNNo,GRNNo,itemId,Qty,SeqFeet,CBM,Remark) values(?,?,?,?,?,?,?);
+        ]]>
+	</query>
+	
+	<!-- Select all GDN For Table-->
+	<query id="all_GDNS">
+         <![CDATA[        
+           select * from gdn
+        ]]>
+	</query>
+	
+	<!-- Select GDN by GDNNo For Table-->
+	<query id="get_GDNQTY_BY_GDNNO">
+         <![CDATA[        
+           select * from gdn_qty where GDNNo = ?
+        ]]>
+	</query>
+	
 </Querys>

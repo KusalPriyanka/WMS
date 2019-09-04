@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.wms.model.GDN;
+import com.wms.model.GDN_Qty;
 import com.wms.service.GoodHandlingServiceImpl;
 import com.wms.service.IGoodHandlingService;
 
@@ -28,6 +29,7 @@ public class InsertGDN extends HttpServlet {
 		HttpSession httpSession = request.getSession();
 		String step = request.getParameter("step");
 		GDN gdn = new GDN();
+		GDN_Qty gdnQty = new GDN_Qty();
 		IGoodHandlingService iGoodHandlingService = new GoodHandlingServiceImpl();
 		
 		if(step.equals("1")) {
@@ -41,11 +43,26 @@ public class InsertGDN extends HttpServlet {
 			gdn.setDate(request.getParameter("date"));
 			gdn.setNoOfItems(Integer.parseInt(request.getParameter("NoOfProducts")));
 			
-			//iGoodHandlingService.addGDN(gdn);
+			iGoodHandlingService.addGDN(gdn);
 		
 			httpSession.setAttribute("GDN", gdn);
 			httpSession.setAttribute("GDNNo", request.getParameter("GDNNo"));
 			response.sendRedirect("views/GoodHandling/dispatchdetails.jsp");
+		}
+		
+		else if(step.equals("2")) {
+			
+			gdnQty.setGRNNo(request.getParameter("grnno"));
+			gdnQty.setGDNNo(request.getParameter("gdnno"));
+			gdnQty.setItemId(request.getParameter("itemno"));
+			gdnQty.setQty(Float.parseFloat(request.getParameter("qty")));
+			gdnQty.setSeqFeet(Integer.parseInt(request.getParameter("sf")));
+			gdnQty.setCBM(Integer.parseInt(request.getParameter("cbm")));
+			gdnQty.setRemark(request.getParameter("remark"));
+			
+			iGoodHandlingService.addGDNQty(gdnQty);
+			
+			response.sendRedirect("views/GoodHandling/overviewgdn.jsp");
 		}
 		
 	}

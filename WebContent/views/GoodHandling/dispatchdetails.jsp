@@ -30,11 +30,12 @@
             
           <div class="row m-2 justify-content-center m-4">
               <div class="col-md-8">
-                <form action="#" method="POST">
+                <form action="${pageContext.request.contextPath}/InsertGDN?step=2" method="POST">
                 <input type="hidden" value="<%= goodHandlingService.getCustomerName(GDN.getCusId())  %>" id="cusName"/>
+                <input type="hidden" value="<%= GDN.getGDNNo()  %>" id="gdnno" name="gdnno"/>
                     <div class="form-group">
                         <label for="grnno">Select GRN No :</label>
-                        <select class="form-control" id="grnno">
+                        <select class="form-control" id="grnno" name="grnno">
                         <option disabled selected> -- Select GRN No -- </option>
                         <% for(GRN G : grnList){ %>
                         
@@ -46,7 +47,7 @@
                     </div>
                     <div class="form-group">
                         <label for="item">Select Item :</label>
-                        <select class="form-control form-control-sm" id="item">
+                        <select class="form-control form-control-sm" id="item" name="itemno">
                         <option disabled selected> -- Select GRN No -- </option>
                         </select>
                     </div>
@@ -54,7 +55,7 @@
                       <div class="form-row">
                           <div class="col">
                             <label for="qty">Enter QTY :</label>
-                            <input type="text" class="form-control form-control-sm" id="qty" placeholder="Quantity">
+                            <input type="text" class="form-control form-control-sm" id="qty" placeholder="Quantity" name="qty">
                           </div>
                       </div>
                     </div>
@@ -62,7 +63,7 @@
                       <div class="form-row">
                           <div class="col">
                             <label for="sqfeet">Enter Square Feet :</label>
-                            <input type="text" class="form-control form-control-sm" id="sqfeet" placeholder="Release Square Feet">
+                            <input type="text" class="form-control form-control-sm" id="sqfeet" placeholder="Release Square Feet" name="sf">
                           </div>
                       </div>
                     </div>
@@ -70,7 +71,7 @@
                       <div class="form-row">
                           <div class="col">
                             <label for="cbm">Enter CBM :</label>
-                            <input type="text" class="form-control form-control-sm" id="cbm" placeholder="Release CBM">
+                            <input type="text" class="form-control form-control-sm" id="cbm" placeholder="Release CBM" name="cbm">
                           </div>
                       </div>
                     </div>
@@ -78,7 +79,7 @@
                       <div class="form-row">
                           <div class="col">
                             <label for="remark">Enter Remark :</label>
-                            <input type="text" class="form-control form-control-sm" id="remark" placeholder="Enter Remark">
+                            <input type="text" class="form-control form-control-sm" id="remark" placeholder="Enter Remark" name="remark">
                           </div>
                       </div>
                     </div>
@@ -128,6 +129,7 @@
     	        	
     	        	var res = JSON.parse(response);
     	        	$("#item option").remove();
+    	        	$("#item").append(new Option("--Select Item--", -1));
     	        	
     	        	$(function() {
     	        		$.each(res, function(i, itemL) {
@@ -140,8 +142,15 @@
     	        		$('#grnnumpre').text(GRNNo);
     	        	});
     	        	
-    	      }
+    	      } 
     	    });
+    	    
+        	$('#qtypre').text('');
+        	$('#sfpre').text('');
+        	$('#cbmpre').text('');
+        	$('#wlocpre').text('');
+        	$('#remarkpre').text('');
+    	    
       });
       
        $("#item").on("change", function(event) { 
@@ -157,10 +166,10 @@
     	        	var res = JSON.parse(response);
     	        	
     	        	$('#qtypre').text(res.qty);
-    	        	$('#sfpre').text(res.qty);
-    	        	$('#cbmpre').text(res.qty);
-    	        	$('#wlocpre').text(res.qty);
-    	        	$('#remarkpre').text(res.qty);
+    	        	$('#sfpre').text(res.seqFeet);
+    	        	$('#cbmpre').text(res.CBM);
+    	        	$('#wlocpre').text(res.wLocId);
+    	        	$('#remarkpre').text(res.remark);
     	        	
     	      }
     	    });

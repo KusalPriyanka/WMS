@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.wms.model.Customer;
 import com.wms.model.GDN;
+import com.wms.model.GDN_Qty;
 import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
 import com.wms.model.Item;
@@ -42,6 +43,12 @@ public interface IGoodHandlingService {
 	public String generateGDNNo(String cusId);
 	
 	public void addGDN(GDN gdn);
+	
+	public void addGDNQty(GDN_Qty GDNQty);
+	
+	public ArrayList<GDN> getGDNs();
+	
+	public ArrayList<GDN_Qty> getGDNQTYView(String GDNNo);
 	
 	//Item
 	public int getItemCode();
