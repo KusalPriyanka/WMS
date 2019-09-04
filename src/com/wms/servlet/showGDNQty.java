@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.wms.model.GDN;
 import com.wms.model.GDN_Qty;
+import com.wms.model.GRN;
 import com.wms.model.GRN_Qty;
 import com.wms.service.GoodHandlingServiceImpl;
 import com.wms.service.IGoodHandlingService;
@@ -45,8 +47,17 @@ public class showGDNQty extends HttpServlet {
 			PrintWriter out = response.getWriter();
 			out.print(gson.toJson(gdn_Qty));
 			out.flush();
-			out.close();
+			out.close();	
+		}
+		
+		else if(step.equals("2")) {
 			
+			GDN gdn = goodHandlingService.getGDNById(GDNNo);
+			
+			PrintWriter out = response.getWriter();
+			out.print(gson.toJson(gdn));
+			out.flush();
+			out.close();
 		}
 	}
 

@@ -50,6 +50,12 @@ public interface IGoodHandlingService {
 	
 	public ArrayList<GDN_Qty> getGDNQTYView(String GDNNo);
 	
+	public void updateGDN(GDN gdn);
+	
+	public GDN getGDNById(String GDNNo);
+	
+	public void requestDeleteGDN(String GDNNo,String reason);
+	
 	//Item
 	public int getItemCode();
 	

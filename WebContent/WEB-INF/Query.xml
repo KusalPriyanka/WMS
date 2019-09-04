@@ -128,6 +128,18 @@
         ]]>
 	</query>
 	
+	<!-- Create table GDN DELETE REQUEST Query -->
+	<query id="create_gdn_delete_req">
+        <![CDATA[
+			CREATE TABLE gdn_delete_req(
+				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			    GDNNo VARCHAR(20) NOT NULL,
+			    reason VARCHAR(100) NOT NULL,
+			    FOREIGN KEY (GDNNo) REFERENCES gdn(GDNNo) ON DELETE CASCADE ON UPDATE CASCADE
+			)
+        ]]>
+	</query>
+	
 	<!-- DROP TABLES -->
 	<query id="drop_table_function">
          <![CDATA[        
@@ -324,6 +336,29 @@
 	<query id="get_GDNQTY_BY_GDNNO">
          <![CDATA[        
            select * from gdn_qty where GDNNo = ?
+        ]]>
+	</query>
+	
+	<!-- Update a particular GDN by GDNNo Query -->
+	<query id="update_GDN">
+         <![CDATA[        
+			update gdn as g
+			set g.VehicleNo = ? , g.ContainerNo = ?
+			where g.GDNNo = ?;
+        ]]>
+	</query>
+	
+	<!-- GET GDN BY GDNNO Query -->
+	<query id="get_GDN_BYID">
+         <![CDATA[        
+			select * from gdn where GDNNo = ?;
+        ]]>
+	</query>
+	
+	<!-- DELETE REQ GDN Query -->
+	<query id="request_delete_gdn">
+         <![CDATA[        
+			insert into gdn_delete_req(GDNNo,reason) values(?, ?)
         ]]>
 	</query>
 	

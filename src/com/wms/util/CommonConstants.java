@@ -47,6 +47,7 @@ public class CommonConstants {
 	public static final String QUERY_ID_CREATE_ITEM_DELETE_REQUEST_TABLE = "create_item_delete_req";
 	public static final String QUERY_ID_CREATE_GDN_TABLE = "create_gdn_table";
 	public static final String QUERY_ID_CREATE_GDN_QTY_TABLE = "create_gdn_qty_table";
+	public static final String QUERY_ID_CREATE_GDN_DELETE_REQUEST_TABLE = "create_gdn_delete_req";
 	
 	/** Constant for query id of insert GRN in Query.xml */
 	public static final String QUERY_ID_INSERT_GRN = "insert_GRN";
@@ -122,6 +123,15 @@ public class CommonConstants {
 	
 	/** Constant for query id of get GDN in Query.xml */
 	public static final String QUERY_ID_GET_GDNQTY_BY_GDNNO = "get_GDNQTY_BY_GDNNO";
+	
+	/** Constant for query id of Update GDN in Query.xml */
+	public static final String QUERY_ID_UPDATE_GDN = "update_GDN";
+	
+	/** Constant for query id of get GDN by id in Query.xml */
+	public static final String QUERY_ID_GET_GDN_BY_GDNNO = "get_GDN_BYID";
+	
+	/** Constant for query id of DELETE req GDN in Query.xml */
+	public static final String QUERY_ID_REQUEST_DELETE_GDN = "request_delete_gdn";
 	
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

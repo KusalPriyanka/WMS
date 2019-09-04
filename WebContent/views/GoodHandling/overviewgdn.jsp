@@ -101,15 +101,15 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="updateGRNNo">Kus_GRN_01</h5>
+                <h5 class="modal-title" id="updateGDNNo"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
                 <div class="modal-body">
                 <div class="row-md-12 justify-content-center m-2">
-                  <form action="${pageContext.request.contextPath}/UpdateGRN" method="POST">
-                  <input type="hidden" name="GRN" id="grnForServlet"/>
+                  <form action="${pageContext.request.contextPath}/UpdateGDN" method="POST">
+                  <input type="hidden" name="GDN" id="gdnForServlet"/>
                       <div class="form-group">
                           <div class="form-row">
                               <div class="col-md-12">
@@ -181,20 +181,20 @@
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel">Delete </h5>
+			        <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
                 <div class="row-md-12 justify-content-center m-2">
-                  <form action="${pageContext.request.contextPath}/deleteGRN?step=req" method="POST">
-                  <input type="hidden" name="GRN" id="grnForServlet"/>
+                  <form action="${pageContext.request.contextPath}/deleteGDN?step=req" method="POST">
+                  <input type="hidden" name="GDN" id="grnForServlet"/>
                       <div class="form-group">
                           <div class="form-row">
                               <div class="col-md-12">
-                                <label for="GRNNo">GRN No :</label>
-                                <input type="text" class="form-control form-control-sm" id="GRNNoForDelete" name="GRNNo" readonly>
+                                <label for="GRNNo">GDN No :</label>
+                                <input type="text" class="form-control form-control-sm" id="GDNNoForDelete" name="GDNNo" readonly>
                               </div>
                             </div>
                       </div>
@@ -209,7 +209,7 @@
                       <div class="form-group">
                           <div class="form-row float-right">
                  		<button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Close</button>
-                		<button type="submit" class="btn btn-danger float-right">Request GRN Delete</button>  
+                		<button type="submit" class="btn btn-danger float-right">Request GDN Delete</button>  
                       </div>
                       </div>                                        
                   </form>
@@ -276,34 +276,33 @@
      
      $(".btnupdate").click(function() {
          var $row = $(this).closest("tr");    // Find the row
-         var $grn = $row.find(".grn").text(); // Find the text in row
- 		
- 	    $.ajax({
- 	        url      : 'http://localhost:8080/Warehouse_Managment_System/showGRNQty?step=2',
+         var $gdn = $row.find(".gdn").text(); // Find the text in row
+
+  	    $.ajax({
+ 	        url      : 'http://localhost:8080/Warehouse_Managment_System/showGDNQty?step=2',
  	        method   : 'GET', 
- 	        data     : {grn: $grn},
+ 	        data     : {gdn: $gdn},
  	        success  : function(response){
  	        	
- 	        	var grn = $.parseJSON(response);
+ 	        	var gdn = $.parseJSON(response);
  	        	
- 	        	$('#updateGRNNo').text(grn.GRNNo);
- 	        	$('#updatevehicleNo').val(grn.vehicleNo);
- 	        	$('#updatecontainerNo').val(grn.containerNo);
- 	        	$('#updatetrailerNo').val(grn.trailerNo); 
- 	        	$('#grnForServlet').val(grn.GRNNo);
+ 	        	$('#updateGDNNo').text(gdn.GDNNo);
+ 	        	$('#updatevehicleNo').val(gdn.vehicleNo);
+ 	        	$('#updatecontainerNo').val(gdn.containerNo);
+ 	        	$('#gdnForServlet').val(gdn.GDNNo);
  	        	
  	        	$('#update').modal('toggle'); 
  				
  	      }
- 	    });
+ 	    }); 
      }); 
     
      $(".btndelete").click(function() {
     	 
          var $row = $(this).closest("tr");    // Find the row
-         var $grn = $row.find(".grn").text(); // Find the text in row
+         var $gdn = $row.find(".gdn").text(); // Find the text in row
          
-         $('#GRNNoForDelete').val($grn);
+         $('#GDNNoForDelete').val($gdn);
          
     	 $('#delete').modal('toggle');
      });

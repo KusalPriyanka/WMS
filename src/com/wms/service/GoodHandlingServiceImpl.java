@@ -62,6 +62,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GDN_QTY_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GRN_DELETE_REQUEST_TABLE));
 			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_ITEM_DELETE_REQUEST_TABLE));
+			statement.executeUpdate(QueryUtil.queryByID(CommonConstants.QUERY_ID_CREATE_GDN_DELETE_REQUEST_TABLE));
 			
 
 		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
@@ -1071,55 +1072,6 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		
 	}
 
-
-	@Override
-	public ArrayList<GDN> getGDNs() {
-		
-		ArrayList<GDN> GDNList = new ArrayList<>();
-		
-		try {
-			
-			connection = DBConnectionUtil.getDBConnection();
-			
-			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_ALL_GDN));
-			
-			ResultSet resultSet = preparedStatement.executeQuery();
-			
-			while(resultSet.next()) {
-				
-				GDN gdn = new GDN();
-				gdn.setGDNNo(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
-				gdn.setVehicleNo(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
-				gdn.setContainerNo(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
-				gdn.setDate(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
-				gdn.setsTime(resultSet.getString(CommonConstants.COLUMN_INDEX_FIVE));
-				gdn.seteTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
-				gdn.setCusId(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
-				GDNList.add(gdn);
-				
-			}
-			
-			
-		} catch (Exception e) {
-			log.log(Level.SEVERE, e.getMessage());
-		} finally {
-			
-			try {
-				if (preparedStatement != null) {
-					preparedStatement.close();
-				}
-				if (connection != null) {
-					connection.close();
-				}
-			} catch (SQLException e) {
-				log.log(Level.SEVERE, e.getMessage());
-			}	
-		}
-		
-		return GDNList;
-	}
-
-
 	@Override
 	public ArrayList<GDN_Qty> getGDNQTYView(String GDNNo) {
 		
@@ -1165,5 +1117,144 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		}
 		
 		return GDNList;
+	}
+
+
+	@Override
+	public void updateGDN(GDN gdn) {
+		
+		if(gdn != null) {
+			
+			try {
+				
+				connection = DBConnectionUtil.getDBConnection();
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_UPDATE_GDN));
+				
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, gdn.getVehicleNo());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, gdn.getContainerNo());
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, gdn.getGDNNo());
+				
+				preparedStatement.executeUpdate();
+				
+			} catch (Exception e) {
+				log.log(Level.SEVERE, e.getMessage());
+			} finally {
+				
+				try {
+					if (preparedStatement != null) {
+						preparedStatement.close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					log.log(Level.SEVERE, e.getMessage());
+				}
+			}
+			
+		}
+		
+	}
+
+	@Override
+	public GDN getGDNById(String GDNNo) {
+		return actionGDN(GDNNo).get(0);
+	}
+	
+	@Override
+	public ArrayList<GDN> getGDNs() {
+		return actionGDN(null);
+	}
+	
+
+	public ArrayList<GDN> actionGDN(String GDNNo) {
+		
+		ArrayList<GDN> GDNList = new ArrayList<>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			if (GDNNo != null && !GDNNo.isEmpty()) {
+				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_GET_GDN_BY_GDNNO));
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GDNNo);
+				
+			}
+			
+			else {
+				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_ALL_GDN));
+				
+			}
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				GDN gdn = new GDN();
+				gdn.setGDNNo(resultSet.getString(CommonConstants.COLUMN_INDEX_ONE));
+				gdn.setVehicleNo(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				gdn.setContainerNo(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+				gdn.setDate(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+				gdn.setsTime(resultSet.getString(CommonConstants.COLUMN_INDEX_FIVE));
+				gdn.seteTime(resultSet.getString(CommonConstants.COLUMN_INDEX_SIX));
+				gdn.setCusId(resultSet.getString(CommonConstants.COLUMN_INDEX_SEVEN));
+				GDNList.add(gdn);
+				
+			}
+			
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}	
+		}
+		
+		return GDNList;
+	}
+
+
+	@Override
+	public void requestDeleteGDN(String GDNNo, String reason) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_GDN));
+			connection.setAutoCommit(false);
+			
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GDNNo);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, reason);
+			
+			preparedStatement.execute();
+			connection.commit();
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
 	}
 }
