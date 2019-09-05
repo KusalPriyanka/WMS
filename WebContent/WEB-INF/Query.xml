@@ -109,6 +109,7 @@
         <![CDATA[
 			CREATE TABLE grn_delete_req(
 				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+				cusName varchar(75) NOT NULL,
 			    GRNNo VARCHAR(20) NOT NULL,
 			    reason VARCHAR(100) NOT NULL,
 			    FOREIGN KEY (GRNNo) REFERENCES grn(GRNNo) ON DELETE CASCADE ON UPDATE CASCADE
@@ -133,6 +134,7 @@
         <![CDATA[
 			CREATE TABLE gdn_delete_req(
 				id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+				cusName varchar(75) NOT NULL,
 			    GDNNo VARCHAR(20) NOT NULL,
 			    reason VARCHAR(100) NOT NULL,
 			    FOREIGN KEY (GDNNo) REFERENCES gdn(GDNNo) ON DELETE CASCADE ON UPDATE CASCADE
@@ -235,7 +237,7 @@
 	<!-- request delete a particular GRN -->
 	<query id="request_delete_GRN">
          <![CDATA[        
-			insert into grn_delete_req(GRNNo,reason) values(?,?)
+			insert into grn_delete_req(cusName,GRNNo,reason) values(?,?,?)
         ]]>
 	</query>
 	
@@ -246,10 +248,31 @@
         ]]>
 	</query>
 	
-	<!-- request get a particular GRN -->
+	<!-- request get a particular GRNQTY -->
 	<query id="get_GRN_By_ItemIdAndCusId">
          <![CDATA[        
 			select Qty,SeqFeet,CBM,WLocId,Remark from grn_qty where GRNNo = ? and ItemId = ?
+        ]]>
+	</query>
+	
+	<!-- Show DELETE REQ GRN Query -->
+	<query id="show_request_delete_grn">
+         <![CDATA[        
+			select * from grn_delete_req
+        ]]>
+	</query>
+	
+	<!-- DELETE GRN REQ Query -->
+	<query id="delete_grn_del_req">
+         <![CDATA[        
+			delete from grn_delete_req where GRNNo = ?
+        ]]>
+	</query>
+	
+	<!-- DELETE GRN Query -->
+	<query id="delete_grn">
+         <![CDATA[        
+			delete from grn where GRNNo = ?
         ]]>
 	</query>
 	
@@ -358,7 +381,28 @@
 	<!-- DELETE REQ GDN Query -->
 	<query id="request_delete_gdn">
          <![CDATA[        
-			insert into gdn_delete_req(GDNNo,reason) values(?, ?)
+			insert into gdn_delete_req(cusName,GDNNo,reason) values(?, ?, ?)
+        ]]>
+	</query>
+	
+	<!-- Show DELETE REQ GDN Query -->
+	<query id="show_request_delete_gdn">
+         <![CDATA[        
+			select * from gdn_delete_req
+        ]]>
+	</query>
+	
+	<!-- DELETE GDN REQ Query -->
+	<query id="delete_gdn_del_req">
+         <![CDATA[        
+			delete from gdn_delete_req where GDNNo = ?
+        ]]>
+	</query>
+	
+	<!-- DELETE GDN Query -->
+	<query id="delete_gdn">
+         <![CDATA[        
+			delete from gdn where GDNNo = ?
         ]]>
 	</query>
 	

@@ -69,7 +69,7 @@
                 
                     <tr>
                         <td class="grn"><%= GS.getGRNNo() %></td>
-                        <td><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
+                        <td class="cus"><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
                         <td><%= GS.getVehicleNo() %></td>
                         <td><%= GS.getContainerNo() %></td>
                         <td><%= GS.getTrailerNo() %></td>
@@ -170,10 +170,10 @@
 				    <tr class="bg-primary text-white">
 				      <th scope="col">Item Name</th>
 				      <th scope="col">QTY</th>
+				      <th scope="col">SeqFeet</th>
 				      <th scope="col">CBM</th>
 				      <th scope="col">WLoc</th>
 				      <th scope="col">DamageQty</th>
-				      <th scope="col">Status</th>
 				      <th scope="col">Remark</th>
 				    </tr>
 				  </thead>
@@ -201,7 +201,7 @@
 			      <div class="modal-body">
                 <div class="row-md-12 justify-content-center m-2">
                   <form action="${pageContext.request.contextPath}/deleteGRN?step=req" method="POST">
-                  <input type="hidden" name="GRN" id="grnForServlet"/>
+                  <input type="hidden" name="cus" id="cusName"/>
                       <div class="form-group">
                           <div class="form-row">
                               <div class="col-md-12">
@@ -270,10 +270,10 @@
 				        var $tr = $('<tr>').append(
 					            $('<td>').text(grnQ.itemDes),
 					            $('<td>').text(grnQ.qty),
+					            $('<td>').text(grnQ.seqFeet),
 					            $('<td>').text(grnQ.CBM),
 					            $('<td>').text(grnQ.wLocId),
 					            $('<td>').text(grnQ.damageQty),
-					            $('<td>').text(grnQ.status),
 					            $('<td>').text(grnQ.remark)
 					        ); 
 					        $('#grn_qty').append($tr);
@@ -315,8 +315,10 @@
     	 
          var $row = $(this).closest("tr");    // Find the row
          var $grn = $row.find(".grn").text(); // Find the text in row
+         var $cus = $row.find(".cus").text();
          
          $('#GRNNoForDelete').val($grn);
+         $('#cusName').val($cus);
          
     	 $('#delete').modal('toggle');
      });

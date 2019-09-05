@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -58,4 +58,6 @@
 
 </body>
 
-</html>
+</html> -->
+
+<a href="views/Admin">Admin</a>

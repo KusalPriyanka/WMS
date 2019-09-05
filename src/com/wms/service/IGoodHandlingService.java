@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.wms.model.Customer;
+import com.wms.model.DeleteReq;
 import com.wms.model.GDN;
 import com.wms.model.GDN_Qty;
 import com.wms.model.GRN;
@@ -36,7 +37,11 @@ public interface IGoodHandlingService {
 	
 	public void updateGRN(GRN grn);
 	
-	public void requestDeleteGRN(String GRNNo,String reason);
+	public void requestDeleteGRN(DeleteReq delReq);
+	
+	public ArrayList<DeleteReq> showReqDeleteGRN();
+	
+	public void deleteGRN(String GRNNo);
 	
 	//GDN
 	
@@ -54,7 +59,12 @@ public interface IGoodHandlingService {
 	
 	public GDN getGDNById(String GDNNo);
 	
-	public void requestDeleteGDN(String GDNNo,String reason);
+	public void requestDeleteGDN(DeleteReq delReq);
+	
+	public ArrayList<DeleteReq> showReqDeleteGDN();
+	
+	public void deleteGDN(String GDNNo);
+	
 	
 	//Item
 	public int getItemCode();

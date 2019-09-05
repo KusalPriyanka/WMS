@@ -67,7 +67,7 @@
                 
                     <tr>
                         <td class="gdn"><%= GS.getGDNNo() %></td>
-                        <td><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
+                        <td class="cus"><%= goodHandlingService.getCustomerName(GS.getCusId()) %></td>
                         <td><%= GS.getVehicleNo() %></td>
                         <td><%= GS.getContainerNo() %></td>
                         <td><%= GS.getDate() %></td>
@@ -109,7 +109,7 @@
                 <div class="modal-body">
                 <div class="row-md-12 justify-content-center m-2">
                   <form action="${pageContext.request.contextPath}/UpdateGDN" method="POST">
-                  <input type="hidden" name="GDN" id="gdnForServlet"/>
+                  
                       <div class="form-group">
                           <div class="form-row">
                               <div class="col-md-12">
@@ -189,7 +189,7 @@
 			      <div class="modal-body">
                 <div class="row-md-12 justify-content-center m-2">
                   <form action="${pageContext.request.contextPath}/deleteGDN?step=req" method="POST">
-                  <input type="hidden" name="GDN" id="grnForServlet"/>
+                  <input type="hidden" name="cus" id="cusName"/>
                       <div class="form-group">
                           <div class="form-row">
                               <div class="col-md-12">
@@ -301,8 +301,10 @@
     	 
          var $row = $(this).closest("tr");    // Find the row
          var $gdn = $row.find(".gdn").text(); // Find the text in row
+         var $cus = $row.find(".cus").text();
          
          $('#GDNNoForDelete').val($gdn);
+         $('#cusName').val($cus);
          
     	 $('#delete').modal('toggle');
      });

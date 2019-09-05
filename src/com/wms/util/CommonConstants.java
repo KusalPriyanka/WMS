@@ -88,6 +88,15 @@ public class CommonConstants {
 	/** Constant for query id of get GRN in Query.xml */
 	public static final String QUERY_ID_GET_GRNQTY_GRNNOANDITEMID = "get_GRN_By_ItemIdAndCusId";
 	
+	/** Constant for query id of show DELETE req GRN in Query.xml */
+	public static final String QUERY_ID_SHOW_REQUEST_DELETE_GRN = "show_request_delete_grn";
+	
+	/** Constant for query id of show DELETE req GRN in Query.xml */
+	public static final String QUERY_ID_DELETE_GRN_DEL_REQ = "delete_grn_del_req";
+	
+	/** Constant for query id of show DELETE req GRN in Query.xml */
+	public static final String QUERY_ID_DELETE_GRN = "delete_grn";
+	
 	/** Constant for query id of insert Item in Query.xml */
 	public static final String QUERY_ID_INSERT_ITEM = "insert_ITEM";
 	
@@ -132,6 +141,15 @@ public class CommonConstants {
 	
 	/** Constant for query id of DELETE req GDN in Query.xml */
 	public static final String QUERY_ID_REQUEST_DELETE_GDN = "request_delete_gdn";
+	
+	/** Constant for query id of show DELETE req GDN in Query.xml */
+	public static final String QUERY_ID_SHOW_REQUEST_DELETE_GDN = "show_request_delete_gdn";
+	
+	/** Constant for query id of show DELETE req GRN in Query.xml */
+	public static final String QUERY_ID_DELETE_GDN_DEL_REQ = "delete_gdn_del_req";
+	
+	/** Constant for query id of show DELETE req GRN in Query.xml */
+	public static final String QUERY_ID_DELETE_GDN = "delete_gdn";
 	
 	/** Constant for Column index one */
 	public static final int COLUMN_INDEX_ONE = 1;

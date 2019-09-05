@@ -68,6 +68,7 @@
             <h6 class="collapse-header">Good Receiving(GRN)</h6>
             <a class="collapse-item" href="overviewgrn.jsp">Overview</a>
             <a class="collapse-item" href="goodreceive_s1.jsp">Create GRN</a>
+            <a class="collapse-item" href="grndelete.jsp">GRN Delete Req</a>
           </div>
         </div>
       </li>
@@ -82,7 +83,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Items</h6>
             <a class="collapse-item" href="overviewitem.jsp">Overview</a>
-            <a class="collapse-item" href="itemrequest.jsp">Request New Item</a>
+            <a class="collapse-item" href="itemrequest.jsp">Add New Item</a>
+            <a class="collapse-item" href="itemrequest.jsp">Item Delete Req</a>
           </div>
         </div>
       </li>
@@ -114,6 +116,7 @@
             <h6 class="collapse-header">Good Dispatching(GDN)</h6>
             <a class="collapse-item" href="overviewgdn.jsp">Overview</a>
             <a class="collapse-item" href="dispatch.jsp">Create GDN</a>
+            <a class="collapse-item" href="gdndelete.jsp">GDN Delete Req</a>
           </div>
         </div>
       </li>

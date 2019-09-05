@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import com.wms.model.Customer;
+import com.wms.model.DeleteReq;
 import com.wms.model.GDN;
 import com.wms.model.GDN_Qty;
 import com.wms.model.GRN;
@@ -754,7 +755,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 
 	@Override
-	public void requestDeleteGRN(String GRNNo, String reason) {
+	public void requestDeleteGRN(DeleteReq delReq) {
 		
 		try {
 			
@@ -762,8 +763,9 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_GRN));
 			connection.setAutoCommit(false);
 			
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GRNNo);
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, reason);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, delReq.getCusName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, delReq.getNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, delReq.getReason());
 			
 			preparedStatement.execute();
 			connection.commit();
@@ -1226,7 +1228,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 
 	@Override
-	public void requestDeleteGDN(String GDNNo, String reason) {
+	public void requestDeleteGDN(DeleteReq delReq) {
 		
 		try {
 			
@@ -1234,14 +1236,151 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_GDN));
 			connection.setAutoCommit(false);
 			
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, GDNNo);
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, reason);
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, delReq.getCusName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, delReq.getNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, delReq.getReason());
 			
 			preparedStatement.execute();
 			connection.commit();
 			
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+	}
+
+
+	@Override
+	public ArrayList<DeleteReq> showReqDeleteGRN() {
+		
+		return actionGetDeleteReq("GRN");
+	}
+
+
+	@Override
+	public ArrayList<DeleteReq> showReqDeleteGDN() {
+		
+		return actionGetDeleteReq("GDN");
+	}
+	
+	private ArrayList<DeleteReq> actionGetDeleteReq(String Type){
+		
+		ArrayList<DeleteReq> delReq = new ArrayList<>();
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+			
+			if (Type.equals("GRN")) {
+				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_SHOW_REQUEST_DELETE_GRN));			
+				
+			}
+			
+			else if (Type.equals("GDN")){
+				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_SHOW_REQUEST_DELETE_GDN));
+				
+			}
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				DeleteReq Req = new DeleteReq();
+				Req.setId(resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE));
+				Req.setCusName(resultSet.getString(CommonConstants.COLUMN_INDEX_TWO));
+				Req.setNo(resultSet.getString(CommonConstants.COLUMN_INDEX_THREE));
+				Req.setReason(resultSet.getString(CommonConstants.COLUMN_INDEX_FOUR));
+				delReq.add(Req);
+			}
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		return delReq;
+	}
+
+
+	@Override
+	public void deleteGRN(String GRNNo) {
+		
+		actionDeleteGRN("GRN",GRNNo);
+	}
+
+	@Override
+	public void deleteGDN(String GDNNo) {
+		
+		actionDeleteGRN("GDN",GDNNo);
+	}
+	
+	private void actionDeleteGRN(String Type , String No) {
+		
+		try {
+			connection = DBConnectionUtil.getDBConnection();
+			
+			if(Type.equals("GRN")) {
+				
+				for(int i = 0; i < 2; i++) {
+					if(i == 0) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN_DEL_REQ));	
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+					else if(i == 1) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN));	
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+				}
+				
+			}
+			else if(Type.equals("GDN")) {
+				
+				for(int i = 0; i < 2; i++) {
+					if(i == 0) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN_DEL_REQ));	
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+					else if(i == 1) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN));
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+				}
+				
+			}		
+			
+		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
 		} finally {
 			
 			try {
