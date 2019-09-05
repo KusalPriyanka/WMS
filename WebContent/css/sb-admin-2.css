@@ -12006,3 +12006,12 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+.login-photo{
+    height: 80px;
+    width: 80px;
+}
+
+.heading{
+    font-size: 30px;
+}
