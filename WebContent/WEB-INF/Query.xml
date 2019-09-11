@@ -327,6 +327,15 @@
         ]]>
 	</query>
 	
+	<!-- Update ITEM By ID -->
+	<query id="Confirm_item">
+        <![CDATA[
+			update item as i
+			set i.itemName = ?, i.itemDescription = ?, i.remark = ?, paymentMethod = ?, price = ?, uom = ?
+			where i.itemId = ?
+        ]]>
+	</query>
+	
 	<!-- GET GDN count -->
 	<query id="GDN_COUNT_BY_ID">
          <![CDATA[        
