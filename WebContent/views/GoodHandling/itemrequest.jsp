@@ -17,11 +17,11 @@
               
             <div class="row m-2 justify-content-center m-4">
                 <div class="col-md-10">
-                  <form action="${pageContext.request.contextPath}/InsertItem" method="POST">
+                  <form action="${pageContext.request.contextPath}/InsertItem?step=req" method="POST">
                       <div class="form-group">
                         <div class="form-row">
                               <label for="GRNNumber">Item Code :</label>
-                              <input type="text" class="form-control form-control-sm" id="GRNNumber" value="<%= "Item-"+ goodHandlingService.getItemCode() %>" name="itemCode" readonly>
+                              <input type="text" class="form-control form-control-sm" id="GRNNumber" value="<%= goodHandlingService.getItemCode() %>" name="itemCode" readonly>
                         </div>
                       </div>
                       <div class="form-group">
