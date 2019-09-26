@@ -332,9 +332,10 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 	}
 
 	@Override
-	public int getItemCode() {
+	public String getItemCode() {
 		
 		int itemCount = 0;
+		String itemCode = "Item-";
 		
 		try {
 			
@@ -349,6 +350,8 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 				itemCount = resultSet.getInt(CommonConstants.COLUMN_INDEX_ONE);
 				
 			}
+			
+			itemCode += String.format("%02d", ++itemCount);
 			
 		} catch (Exception e) {
 			
@@ -368,7 +371,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			}
 		}
 		
-		return ++itemCount;
+		return itemCode;
 	}
 
 
@@ -755,7 +758,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 
 	@Override
-	public void requestDeleteGRN(DeleteReq delReq) {
+	public void requestDeleteGRN(DeleteReq deleteReq) {
 		
 		try {
 			
@@ -763,9 +766,9 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_GRN));
 			connection.setAutoCommit(false);
 			
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, delReq.getCusName());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, delReq.getNo());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, delReq.getReason());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, deleteReq.getCusName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, deleteReq.getNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, deleteReq.getReason());
 			
 			preparedStatement.execute();
 			connection.commit();
@@ -1228,7 +1231,7 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 
 	@Override
-	public void requestDeleteGDN(DeleteReq delReq) {
+	public void requestDeleteGDN(DeleteReq deleteReq) {
 		
 		try {
 			
@@ -1236,15 +1239,85 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_REQUEST_DELETE_GDN));
 			connection.setAutoCommit(false);
 			
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, delReq.getCusName());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, delReq.getNo());
-			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, delReq.getReason());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, deleteReq.getCusName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, deleteReq.getNo());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, deleteReq.getReason());
 			
 			preparedStatement.execute();
 			connection.commit();
 			
 		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+	}
+
+
+	@Override
+	public void deleteGRN(String GRNNo) {				
+		actionDeleteGRN("GRN",GRNNo);
+	}
+
+
+	@Override
+	public void deleteGDN(String GDNNo) {
+		actionDeleteGRN("GDN",GDNNo);
+	}
+	
+	private void actionDeleteGRN(String Type , String No) {
+		
+		try {
+			connection = DBConnectionUtil.getDBConnection();
+			
+			if(Type.equals("GRN")) {
+				
+				for(int i = 0; i < 2; i++) {
+					if(i == 0) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN_DEL_REQ));	
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+					else if(i == 1) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN));	
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+				}
+				
+			}
+			else if(Type.equals("GDN")) {
+				
+				for(int i = 0; i < 2; i++) {
+					if(i == 0) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN_DEL_REQ));	
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+					else if(i == 1) {
+						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN));
+						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+						preparedStatement.executeUpdate();
+					}
+				}
+				
+			}		
+			
+		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
+			
+			log.log(Level.SEVERE, e.getMessage());
+			
 		} finally {
 			
 			try {
@@ -1328,59 +1401,75 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 
 
 	@Override
-	public void deleteGRN(String GRNNo) {
+	public void dropDeleteReqGRN(String GRNNo) {
 		
-		actionDeleteGRN("GRN",GRNNo);
+		actionDropDeleteReq(GRNNo, "GRN");
 	}
 
+
 	@Override
-	public void deleteGDN(String GDNNo) {
+	public void dropDeleteReqGDN(String GDNNo) {
 		
-		actionDeleteGRN("GDN",GDNNo);
+		actionDropDeleteReq(GDNNo, "GDN");
 	}
 	
-	private void actionDeleteGRN(String Type , String No) {
+	private void actionDropDeleteReq(String No,String Type) {
 		
 		try {
+			
 			connection = DBConnectionUtil.getDBConnection();
-			
+
 			if(Type.equals("GRN")) {
-				
-				for(int i = 0; i < 2; i++) {
-					if(i == 0) {
-						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN_DEL_REQ));	
-						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
-						preparedStatement.executeUpdate();
-					}
-					else if(i == 1) {
-						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN));	
-						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
-						preparedStatement.executeUpdate();
-					}
-				}
-				
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN_DEL_REQ));	
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+				preparedStatement.executeUpdate();
 			}
+			
 			else if(Type.equals("GDN")) {
-				
-				for(int i = 0; i < 2; i++) {
-					if(i == 0) {
-						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN_DEL_REQ));	
-						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
-						preparedStatement.executeUpdate();
-					}
-					else if(i == 1) {
-						preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN));
-						preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
-						preparedStatement.executeUpdate();
-					}
-				}
-				
-			}		
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN_DEL_REQ));	
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+				preparedStatement.executeUpdate();				
+			}
 			
-		} catch (SQLException | SAXException | IOException | ParserConfigurationException | ClassNotFoundException e) {
-			
+		} catch (Exception e) {
 			log.log(Level.SEVERE, e.getMessage());
+		} finally {
 			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}	
+		
+	}
+
+
+	@Override
+	public void confirmItem(Item item) {
+		
+		try {
+
+			connection = DBConnectionUtil.getDBConnection();
+			preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_CONFIRM_ITEM));
+			
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, item.getItemName());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_TWO, item.getItemDes());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_THREE, item.getRemark());
+			preparedStatement.setInt(CommonConstants.COLUMN_INDEX_FOUR, item.getPaymentMethod());
+			preparedStatement.setFloat(CommonConstants.COLUMN_INDEX_FIVE, item.getPrice());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_SIX, item.getUom());
+			preparedStatement.setString(CommonConstants.COLUMN_INDEX_SEVEN, item.getItemId());
+			
+			preparedStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
 		} finally {
 			
 			try {
@@ -1396,4 +1485,5 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		}
 		
 	}
+	
 }

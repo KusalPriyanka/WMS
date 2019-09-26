@@ -37,11 +37,13 @@ public interface IGoodHandlingService {
 	
 	public void updateGRN(GRN grn);
 	
-	public void requestDeleteGRN(DeleteReq delReq);
+	public void requestDeleteGRN(DeleteReq deleteReq);
+	
+	public void deleteGRN(String GRNNo);
 	
 	public ArrayList<DeleteReq> showReqDeleteGRN();
 	
-	public void deleteGRN(String GRNNo);
+	public void dropDeleteReqGRN(String GRNNo);
 	
 	//GDN
 	
@@ -59,15 +61,16 @@ public interface IGoodHandlingService {
 	
 	public GDN getGDNById(String GDNNo);
 	
-	public void requestDeleteGDN(DeleteReq delReq);
-	
-	public ArrayList<DeleteReq> showReqDeleteGDN();
+	public void requestDeleteGDN(DeleteReq deleteReq);
 	
 	public void deleteGDN(String GDNNo);
 	
+	public ArrayList<DeleteReq> showReqDeleteGDN();
+	
+	public void dropDeleteReqGDN(String GDNNo);
 	
 	//Item
-	public int getItemCode();
+	public String getItemCode();
 	
 	public void addItem(Item item);
 	
@@ -82,4 +85,6 @@ public interface IGoodHandlingService {
 	public void updateItem(Item item);
 	
 	public void requestDeleteItem(String itemId,String reason);
+	
+	public void confirmItem(Item item);
 }
