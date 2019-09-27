@@ -18,7 +18,7 @@
   <!-- Custom styles for this template-->
   <link href="../../css/sb-admin-2.min.css" rel="stylesheet">
 
-  <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+ <link href="../../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   
 </head>
@@ -83,8 +83,8 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Items</h6>
             <a class="collapse-item" href="overviewitem.jsp">Overview</a>
-            <a class="collapse-item" href="itemrequest.jsp">Add New Item</a>
-            <a class="collapse-item" href="itemrequest.jsp">Item Delete Req</a>
+            <a class="collapse-item" href="additem.jsp">Add New Item</a>
+            <a class="collapse-item" href="itemdelete.jsp">Item Delete Req</a>
           </div>
         </div>
       </li>
