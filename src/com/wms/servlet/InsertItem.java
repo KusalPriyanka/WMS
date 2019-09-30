@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.wms.model.Item;
 import com.wms.service.GoodHandlingServiceImpl;
@@ -18,16 +19,33 @@ public class InsertItem extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Item item = new Item();
-		item.setItemId(request.getParameter("itemCode"));
-		item.setItemName(request.getParameter("itemName"));
-		item.setItemDes(request.getParameter("itemDes"));
-		item.setRemark(request.getParameter("itemRemark"));
-		
+		String step = request.getParameter("step");
 		IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-		goodHandlingService.addItem(item);
+		HttpSession httpSession = request.getSession();
 		
-		response.sendRedirect("views/GoodHandling/overviewitem.jsp");
+		if(step.equals("req")) {
+			
+			Item item = new Item();
+			item.setItemId(request.getParameter("itemCode"));
+			item.setItemName(request.getParameter("itemName"));
+			item.setItemDes(request.getParameter("itemDes"));
+			item.setRemark(request.getParameter("itemRemark"));
+						
+			goodHandlingService.addItem(item);
+			
+			response.sendRedirect("views/GoodHandling/overviewitem.jsp");
+			
+		}
+		
+		else if(step.equals("rev")) {
+			
+			String itemId = request.getParameter("item");
+			
+			Item item = goodHandlingService.getItemById(itemId);
+	
+			httpSession.setAttribute("Item", item);		
+			
+		}
 		
 	}
 
