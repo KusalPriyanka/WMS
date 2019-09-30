@@ -1,5 +1,8 @@
 package com.wms.model;
 
+import com.wms.service.GoodHandlingServiceImpl;
+import com.wms.service.IGoodHandlingService;
+
 public class Item {
 
 	private String itemId;
@@ -9,8 +12,14 @@ public class Item {
 	private int paymentMethod;
 	private float price;
 	private String uom;
+	private IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
 	
-	public Item() { }
+	public Item() {
+		this.itemId = goodHandlingService.getItemCode();
+		this.itemName = "";
+		this.itemDes = "";
+		this.remark = "";
+	}
 
 	public Item(String itemId, String itemName, String itemDes, String remark, int paymentMethod, float price,
 			String uom) {
