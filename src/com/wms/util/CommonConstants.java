@@ -2,6 +2,7 @@ package com.wms.util;
 
 public class CommonConstants {
 	
+	
 	/** Constant for config.properties key for query file path */
 	public static final String QUERY_XML = "queryFilePath";
 
@@ -117,6 +118,9 @@ public class CommonConstants {
 	
 	/** Constant for query id of DELETE req Item in Query.xml */
 	public static final String QUERY_ID_REQUEST_DELETE_ITEM = "request_delete_ITEM";
+	
+	/** Constant for query id of Update Item in Query.xml */
+	public static final String QUERY_ID_CONFIRM_ITEM = "Confirm_item";
 	
 	/** Constant for query id of get GRN COUNT in Query.xml */
 	public static final String QUERY_ID_GET_GDN_COUNT_BY_ID = "GDN_COUNT_BY_ID";
