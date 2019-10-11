@@ -21,11 +21,29 @@
             
             <div class="row justify-content-center">
             <a href="itemrequest.jsp">
-            <button type="button" class="btn btn-outline-primary btn-lg">
+            <button type="button" class="btn btn-outline-primary btn-lg mr-5">
 			    <b>Request New Item</b>
 			</button>
 			</a>
-            </div>            
+			<a href="ReportItem.jsp">
+            <button type="button" class="btn btn-outline-primary btn-lg">
+			    <b>Generate Item Report</b>
+			</button>
+			</a>
+            </div>      
+            
+            <div class="row justify-content-center mt-4">
+	          <form class="navbar-search" action="${pageContext.request.contextPath}/ItemSearch" method="POST">
+	            <div class="input-group">
+	              <input type="text" class="form-control border-0 small" placeholder="Search By Item Id..." aria-label="Search" aria-describedby="basic-addon2" name="itemId">
+	              <div class="input-group-append">
+	                <button class="btn btn-primary" type="submit">
+	                  <i class="fas fa-search fa-sm"></i>
+	                </button>
+	              </div>
+	            </div>
+	          </form>
+            </div>      
               
         <div class="row justify-content-center m-4">
         <div class="col">
@@ -37,7 +55,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Item Code</th>
@@ -65,6 +83,29 @@
                 <tbody>
                 
                 <%
+               
+     			HttpSession Session = request.getSession();
+     			
+     			if(session.getAttribute("ITEM") != null){
+     				Item item = (Item)session.getAttribute("ITEM"); %>
+     			
+     			    <tr>
+                    	<td class="item"><%= item.getItemId() %></td>
+                        <td><%= item.getItemName() %></td>
+                        <td><%= item.getItemDes() %></td>
+                        <td><%= item.getRemark() %></td>
+                        <td><%= item.getPaymentMethod() %></td>
+                        <td><%= item.getPrice() %></td>
+                        <td><%= item.getUom() %></td>
+                        <td><center>
+                        <button type="button" class="btnupdate btn btn-success btn-circle"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btndelete btn btn-danger btn-circle"><i class="fas fa-trash"></i></button>
+                        </center></td>
+                    </tr>
+     			
+     			<% 
+     			}               
+     			else{
                 	for(Item item : itemList){
                 %>
                 
@@ -84,6 +125,7 @@
                     
                  <%
                 	}
+     			}
                  %>   
                     
                 </tbody>
