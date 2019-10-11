@@ -7,13 +7,15 @@
  
 		 <%
 		 	HttpSession Session = request.getSession();
-		 	Item item = new Item();
 		 	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
 		 
-			if(session.getAttribute("Item") != null){
-				item = (Item)session.getAttribute("Item");
-				System.out.println(item);
-			}	
+		 	if(session.getAttribute("Item") == null){
+		 		response.sendRedirect("reqitem.jsp");
+		 	}
+		 	
+		 	else{
+				Item item = (Item)session.getAttribute("Item");
+			
 		 %>
  
         <!-- Begin Page Content -->
@@ -25,45 +27,46 @@
               
             <div class="row m-2 justify-content-center m-4">
                 <div class="col-md-10">
-                  <form action="#" method="POST">
+                  <form action="${pageContext.request.contextPath}/InsertItem?step=cnf" method="POST">
                       <div class="form-group">
                         <div class="form-row">
                               <label for="GRNNumber">Item Code :</label>
-                              <input type="text" class="form-control form-control-sm" id="GRNNumber" value="<%= item.getItemId() %>" readonly>
+                              <input type="text" class="form-control form-control-sm" id="GRNNumber" value="<%= item.getItemId() %>" readonly name="ItemNo">
                         </div>
                       </div>
                       <div class="form-group">
                         <div class="form-row">
                             <label for="GRNNumber">Enter Item Name :</label>
-                            <input type="text" class="form-control form-control-sm" id="GRNNumber" placeholder="Item Name">       
+                            <input type="text" class="form-control form-control-sm" id="GRNNumber" value="<%= item.getItemName() %>" name="itemName">       
                         </div>
                       </div>
                       <div class="form-group">
                           <div class="form-row">
                             <label for="trailerNo">Enter Description :</label>
-                            <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Description">
+                            <input type="text" class="form-control form-control-sm" id="trailerNo" value="<%= item.getItemDes() %>" name="itemDes">
                           </div>
                       </div>
                       <div class="form-group">
                             <div class="form-row">
                               <label for="trailerNo">Enter Remark :</label>
-                              <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Remark">
+                              <input type="text" class="form-control form-control-sm" id="trailerNo" value="<%= item.getRemark() %>" name="remark">
                             </div>
                       </div>
                       <div class="form-group">
                         <div class="form-row">
                             <div class="col pl-0">
                                 <label for="exampleFormControlSelect1">Payment Type :</label>
-                                <select class="form-control form-control-sm" id="exampleFormControlSelect1">
-                                  <option>CBM</option>
-                                  <option>Square Feet</option>
-                                  <option>Custom Price</option>
+                                <select class="form-control form-control-sm" id="exampleFormControlSelect1" name="paymentType">
+                                <option disabled selected> -- Select Payment Type -- </option>
+                                  <option value="1">CBM</option>
+                                  <option value="2">Square Feet</option>
+                                  <option value="3">Custom Price</option>
                                 </select>
                             </div>
                           <div class="col">
                               <div class="form-row">
                                   <label for="trailerNo">Enter Item Price :</label>
-                                  <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Price">
+                                  <input type="text" class="form-control form-control-sm" id="trailerNo" placeholder="Item Price" name="price">
                                 </div>
                           </div>
                         </div>
@@ -72,7 +75,7 @@
                           <div class="form-row">
                               <div class="col-md-6 pl-0">
                                   <label for="exampleFormControlSelect1">Select Unit Of Measurement :</label>
-                                  <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+                                  <select class="form-control form-control-sm" id="exampleFormControlSelect1" name="uom">
                                     <option>Bags</option>
                                     <option>Box</option>
                                     <option>Plates</option>
@@ -89,7 +92,7 @@
                   </form>
               </div>  
             </div>
-            
+           <% } %>
           </div>
         <!-- /.container-fluid -->
 
