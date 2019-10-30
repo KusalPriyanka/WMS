@@ -14,10 +14,10 @@
 
     <div class="container">
         <div class="row justify-content-center mt-5">
-            <img src="images/login-avatar.png" alt="login_image" class="login-photo">
+            <img src="img/login-avatar.png" alt="login_image" class="login-photo">
         </div>
         <div class="row justify-content-center mt-2">
-            <p class="heading">Sign in to Social Club</p>
+            <p class="heading">Sign in to DWW</p>
         </div>
         <div class="row justify-content-center m-2">
             <div class="col-md-5">
@@ -34,10 +34,8 @@
                                 <input type="password" class="form-control" id="exampleInputPassword1"
                                     placeholder="Password">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>                            
-                        </form>
-                        <div class="text-center mt-3"> <a href="#">Forgot Password?</a></div>
-                       
+                            <button type="submit" class="btn btn-primary btn-block mt-4 mb-3">Sign In</button>                            
+                        </form>                   
                     </div>
                 </div>
             </div>
@@ -46,7 +44,7 @@
             <div class="col-md-5">
                 <div class="card shadow-sm">
                         <div class="card-body text-center">
-                            New to Social Club?  <a href="#">Create an account.</a>
+                            Cannot Remember Password <a href="#">Forgot Password?</a>
                         </div>
                 </div>
             </div>    
