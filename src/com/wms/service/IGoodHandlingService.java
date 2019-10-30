@@ -45,6 +45,8 @@ public interface IGoodHandlingService {
 	
 	public void dropDeleteReqGRN(String GRNNo);
 	
+	public void GRNdeleteByAdmin(String GRNNo);
+	
 	//GDN
 	
 	public String generateGDNNo(String cusId);
@@ -68,6 +70,8 @@ public interface IGoodHandlingService {
 	public ArrayList<DeleteReq> showReqDeleteGDN();
 	
 	public void dropDeleteReqGDN(String GDNNo);
+	
+	public void GDNdeleteByAdmin(String GDNNo);
 	
 	//Item
 	public String getItemCode();

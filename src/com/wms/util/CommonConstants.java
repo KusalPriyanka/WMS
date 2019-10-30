@@ -2,6 +2,14 @@ package com.wms.util;
 
 public class CommonConstants {
 	
+	/** Company DEtails */
+	public static final String COMPANY_NAME = "DWW LOGISTICS LANKA (PVT) LTD";
+	public static final String COMPANY_ADDRESS = "BIYAGAMA ROAD, KELANIYA";
+	public static final String WAREHOUSE_NO = "DWW Warehouse No : 01";
+	
+	public static final String GRN_REPORT_CAPTION = "GOODS RECEIVED NOTE (GRN)";
+	public static final String GDN_REPORT_CAPTION = "GOODS DISPATCH NOTE (GDN)";
+	public static final String ITEM_REPORT_CAPTION = "Item List";
 	
 	/** Constant for config.properties key for query file path */
 	public static final String QUERY_XML = "queryFilePath";
@@ -109,6 +117,7 @@ public class CommonConstants {
 	
 	/** Constant for query id of get Item List in Query.xml */
 	public static final String QUERY_ID_GET_ITEM_LIST = "GET_ITEM_LIST";
+	public static final String QUERY_ID_GET_REQ_ITEM_LIST = "GET_REQ_ITEM_LIST";
 	
 	/** Constant for query id of Update Item in Query.xml */
 	public static final String QUERY_ID_UPDATE_ITEM = "GET_ITEM_UPDATE";

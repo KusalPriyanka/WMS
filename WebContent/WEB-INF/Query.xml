@@ -300,7 +300,14 @@
 	<!-- GET ITEM LIST QUERY -->
 	<query id="GET_ITEM_LIST">
         <![CDATA[
-          	select * from item
+          	select * from item where paymentMethod != -1 and price != -1
+        ]]>
+	</query>
+	
+	<!-- GET REQ ITEM LIST QUERY -->
+	<query id="GET_REQ_ITEM_LIST">
+        <![CDATA[
+          	select * from item where paymentMethod = -1 and price = -1
         ]]>
 	</query>
 	

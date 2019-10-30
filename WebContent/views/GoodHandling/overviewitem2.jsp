@@ -8,7 +8,7 @@
        
         <%  
         	IGoodHandlingService goodHandlingService = new GoodHandlingServiceImpl();
-        	ArrayList<Item> itemList = goodHandlingService.getItemList();
+        	ArrayList<Item> itemList = goodHandlingService.getReqItemList();
 
         %>
 
@@ -21,16 +21,11 @@
             
             <div class="row justify-content-center">
             <a href="itemrequest.jsp">
-            <button type="button" class="btn btn-outline-primary btn-lg mr-5">
+            <button type="button" class="btn btn-outline-primary btn-lg">
 			    <b>Request New Item</b>
 			</button>
 			</a>
-			<a href="ReportItem.jsp">
-            <button type="button" class="btn btn-outline-primary btn-lg">
-			    <b>Generate Item Report</b>
-			</button>
-			</a>
-            </div>           
+            </div>            
               
         <div class="row justify-content-center m-4">
         <div class="col">
@@ -42,7 +37,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>Item Code</th>
@@ -68,7 +63,7 @@
                       </tr>
                   </tfoot>
                 <tbody>
-                 
+                
                 <%
                 	for(Item item : itemList){
                 %>
@@ -89,7 +84,7 @@
                     
                  <%
                 	}
-                 %>                  
+                 %>   
                     
                 </tbody>
             </table>

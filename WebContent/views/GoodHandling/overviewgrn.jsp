@@ -77,6 +77,7 @@
                         <td><center>
                         <button type="button" class="btnshow btn btn-warning btn-circle"><i class="fas fa-eye"></i></button>
                         <button type="button" class="btnupdate btn btn-success btn-circle"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btnprint btn bg-primary btn-circle"><i class="fas fa-file-pdf text-light"></i></button>
                         <button type="button" class="btndelete btn btn-danger btn-circle"><i class="fas fa-trash"></i></button>
                         </center></td>
                     </tr>
@@ -231,15 +232,49 @@
 			  </div>
 			</div>
         
-          <!-- Bootstrap core JavaScript-->
-  <script src="../../vendor/jquery/jquery.min.js"></script>
-  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="../../js/sb-admin-2.min.js"></script>
+          <!-- Print Model -->
+			<div class="modal fade" id="print" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">Print GRN Report </h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+                <div class="row-md-12 justify-content-center m-2">
+                  <form action="${pageContext.request.contextPath}/GRNGDNReport?step=1" method="POST">
+                      <div class="form-group">
+                          <div class="form-row">
+                              <div class="col-md-12">
+                                <label for="GRNNo">GRN No :</label>
+                                <input type="text" class="form-control form-control-sm" id="GRNForPrint" name="GRNNo" readonly>
+                              </div>
+                            </div>
+                      </div>
+                      <div class="form-group">
+                          <div class="form-row float-right">
+                 		<button type="button" class="btn btn-secondary float-right mr-2" data-dismiss="modal">Close</button>
+                		<button type="submit" class="btn btn-success float-right">Print GRN Report</button>  
+                      </div>
+                      </div>                                        
+                  </form>
+                </div>			        
+			      </div>
+			    </div>
+			  </div>
+			</div>
+        
+	  <!-- Bootstrap core JavaScript-->
+	  <script src="../../vendor/jquery/jquery.min.js"></script>
+	  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	
+	  <!-- Core plugin JavaScript-->
+	  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+	
+	  <!-- Custom scripts for all pages-->
+	  <script src="../../js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
     <script src="../../vendor/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -321,6 +356,16 @@
          $('#cusName').val($cus);
          
     	 $('#delete').modal('toggle');
+     });
+     
+     $(".btnprint").click(function() {
+    	 
+         var $row = $(this).closest("tr");    // Find the row
+         var $grn = $row.find(".grn").text(); // Find the text in row
+         
+         $('#GRNForPrint').val($grn);
+         
+         $('#print').modal('toggle');
      });
      
     </script>
