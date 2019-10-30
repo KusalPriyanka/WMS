@@ -1485,5 +1485,56 @@ public class GoodHandlingServiceImpl implements IGoodHandlingService {
 		}
 		
 	}
+
+
+	@Override
+	public void GRNdeleteByAdmin(String GRNNo) {
+		actionDeleteByAdmin(GRNNo,"GRN");
+		
+	}
+
+
+	@Override
+	public void GDNdeleteByAdmin(String GDNNo) {
+		actionDeleteByAdmin(GDNNo,"GDN");
+		
+	}
+	
+	private void actionDeleteByAdmin(String No , String Type) {
+		
+		try {
+			
+			connection = DBConnectionUtil.getDBConnection();
+
+			if(Type.equals("GRN")) {
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GRN));	
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+				preparedStatement.executeUpdate();
+			}
+			
+			else if(Type.equals("GDN")) {
+				preparedStatement = connection.prepareStatement(QueryUtil.queryByID(CommonConstants.QUERY_ID_DELETE_GDN));	
+				preparedStatement.setString(CommonConstants.COLUMN_INDEX_ONE, No);			
+				preparedStatement.executeUpdate();				
+			}
+			
+		} catch (Exception e) {
+			log.log(Level.SEVERE, e.getMessage());
+		} finally {
+			
+			try {
+				if (preparedStatement != null) {
+					preparedStatement.close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				log.log(Level.SEVERE, e.getMessage());
+			}
+		}
+		
+		
+	}
 	
 }
